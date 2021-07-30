@@ -89,9 +89,14 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="DbInitialization.cs" />
+        <Compile Include="InputParamsValidator.cs" />
+        <Compile Include="MessagesGetter.cs" />
+        <Compile Include="MessagesPrinter.cs" />
         <Compile Include="Program.cs" />
-        <Compile Include="ProgramStarter.cs" />
+        <Compile Include="Bootstrapper.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="ReceiverDeterminer.cs" />
+        <Compile Include="TaskWaiter.cs" />
     </ItemGroup>
     <ItemGroup>
       <None Include="App.config" />

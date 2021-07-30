@@ -15,7 +15,7 @@ namespace TelemetryStorageServer
                 Console.WriteLine("Запущена инициализация базы данных телеметрии.");
                 
                 Console.Write("\nПожалуйста, подождите.");
-                Wait(taskStatisticsDb);
+                TaskWaiter.Wait(taskStatisticsDb);
 
                 if (taskStatisticsDb.Exception != null)
                 {
@@ -27,26 +27,13 @@ namespace TelemetryStorageServer
                 }
                 
                 Console.WriteLine();
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("\nБаза данных телеметрии: Связь установлена.");
-                Console.ResetColor();
+                MessagesPrinter.PrintColorMessage("\nБаза данных телеметрии: Связь установлена.", ConsoleColor.Green);
             }
             catch (Exception e)
             {
                 Console.WriteLine();
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"\nОшибка инициализации БД: {e.Message}");
-                Console.ResetColor();
+                MessagesPrinter.PrintColorMessage($"\nОшибка инициализации БД: {e.Message}", ConsoleColor.Red);
                 throw;
-            }
-        }
-
-        private static void Wait(Task task)
-        {
-            while (!task.IsCompleted)
-            {
-                Console.Write(".");
-                Thread.Sleep(400);
             }
         }
     }

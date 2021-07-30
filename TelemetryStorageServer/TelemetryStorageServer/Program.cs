@@ -4,9 +4,9 @@ namespace TelemetryStorageServer
 {
     internal class Program
     {
-        public static async Task Main(string[] args)
+        public static void Main(string[] args)
         {
-            await ProgramStarter.StartAsync();
+            Bootstrapper bootstrapper = new Bootstrapper();
         }
     }
 }
