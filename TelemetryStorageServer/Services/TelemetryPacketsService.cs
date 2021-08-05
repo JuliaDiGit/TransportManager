@@ -75,7 +75,7 @@ namespace Services
             if (telemetryPacket == null) throw new ArgumentNullException(nameof(telemetryPacket));
 
             return (await _telemetryPacketsPacketRepository.AddTelemetryPacketAsync(telemetryPacket))
-                                              .ToDomain();
+                                                           .ToDomain();
         }
     }
 }

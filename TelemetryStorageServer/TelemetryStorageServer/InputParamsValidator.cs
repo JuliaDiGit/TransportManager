@@ -14,45 +14,48 @@ namespace TelemetryStorageServer
             string path = null;
             int messagesCount = default;
             int messageReceiveTimeout = default;
-            receivingMethod = ConfigurationManager.AppSettings.Get("ReceivingMethod");
 
-            if (receivingMethod != "TransactionalQueue" && receivingMethod != "Http")
-            { 
-                MessagesPrinter.PrintColorMessage("Неверно задан параметр \"ReceivingMethod\"!", ConsoleColor.Red);
-
-                return;
-            }
-            
-            if (receivingMethod == "TransactionalQueue")
+            try
             {
-                path = ConfigurationManager.AppSettings.Get("TransactionalQueuePath");
+                receivingMethod = ConfigurationManager.AppSettings.Get("ReceivingMethod");
 
-                //количество сообщений в транзакции
-                var messagesCountStr = ConfigurationManager.AppSettings.Get("MessagesCount");
-                if (!int.TryParse(messagesCountStr, out messagesCount) || messagesCount <= 0)
+                if (receivingMethod != "TransactionalQueue" && receivingMethod != "Http")
                 {
-                    MessagesPrinter.PrintColorMessage("Неверно задан параметр \"MessagesCount\"!", ConsoleColor.Red);
-
-                    return;
+                    throw new Exception("Неверно задан параметр \"ReceivingMethod\"!");
                 }
 
-                //максимальное время ожидания нового сообщения в секундах
-                var messageReceiveTimeoutStr = ConfigurationManager.AppSettings.Get("MessageReceiveTimeout");
-                if (!int.TryParse(messageReceiveTimeoutStr, out messageReceiveTimeout) || messageReceiveTimeout <= 0)
+                if (receivingMethod == "TransactionalQueue")
                 {
-                    MessagesPrinter.PrintColorMessage("Неверно задан параметр \"MessageReceiveTimeout\"!", ConsoleColor.Red);
+                    path = ConfigurationManager.AppSettings.Get("TransactionalQueuePath");
 
-                    return;
+                    //количество сообщений в транзакции
+                    var messagesCountStr = ConfigurationManager.AppSettings.Get("MessagesCount");
+                    if (!int.TryParse(messagesCountStr, out messagesCount) || messagesCount <= 0)
+                    {
+                        throw new Exception("Неверно задан параметр \"MessagesCount\"!");
+                    }
+
+                    //максимальное время ожидания нового сообщения в секундах
+                    var messageReceiveTimeoutStr = ConfigurationManager.AppSettings.Get("MessageReceiveTimeout");
+                    if (!int.TryParse(messageReceiveTimeoutStr, out messageReceiveTimeout) ||
+                        messageReceiveTimeout <= 0)
+                    {
+                        throw new Exception("Неверно задан параметр \"MessageReceiveTimeout\"!");
+                    }
+                }
+
+                MessagesPrinter.PrintColorMessage("\nВходные параметры", ConsoleColor.DarkYellow);
+                Console.WriteLine("ReceivingMethod: " + receivingMethod);
+                if (receivingMethod == "TransactionalQueue")
+                {
+                    Console.WriteLine("TransactionalQueuePath: " + path);
+                    Console.WriteLine("MessagesCount: " + messagesCount);
+                    Console.WriteLine("MessageReceiveTimeout: " + messageReceiveTimeout);
                 }
             }
-
-            MessagesPrinter.PrintColorMessage("\nВходные параметры", ConsoleColor.DarkYellow);
-            Console.WriteLine("ReceivingMethod: " + receivingMethod);
-            if (receivingMethod == "TransactionalQueue")
+            catch (Exception e)
             {
-                Console.WriteLine("TransactionalQueuePath: " + path);
-                Console.WriteLine("MessagesCount: " + messagesCount);
-                Console.WriteLine("MessageReceiveTimeout: " + messageReceiveTimeout);
+                throw new Exception($"Ошибка при проверке входных данных: \"{e.Message}\"");
             }
         }
     }

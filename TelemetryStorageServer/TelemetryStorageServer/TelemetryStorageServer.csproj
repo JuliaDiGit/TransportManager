@@ -90,7 +90,7 @@
     <ItemGroup>
         <Compile Include="DbInitialization.cs" />
         <Compile Include="InputParamsValidator.cs" />
-        <Compile Include="MessagesGetter.cs" />
+        <Compile Include="Messenger.cs" />
         <Compile Include="MessagesPrinter.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Bootstrapper.cs" />

@@ -12,7 +12,7 @@ namespace TelemetryStorageServer
             try
             {
                 Task taskStatisticsDb = PrimaryDbInitializer.InitializeTelemetryDbAsync();
-                Console.WriteLine("Запущена инициализация базы данных телеметрии.");
+                Console.WriteLine("\nЗапущена инициализация базы данных телеметрии.");
                 
                 Console.Write("\nПожалуйста, подождите.");
                 TaskWaiter.Wait(taskStatisticsDb);
@@ -32,8 +32,7 @@ namespace TelemetryStorageServer
             catch (Exception e)
             {
                 Console.WriteLine();
-                MessagesPrinter.PrintColorMessage($"\nОшибка инициализации БД: {e.Message}", ConsoleColor.Red);
-                throw;
+                throw new Exception($"\nОшибка инициализации БД: \"{e.Message}\"");
             }
         }
     }

@@ -11,6 +11,9 @@ namespace TelemetryStorageServer
                                       out HttpListener listener, 
                                       out TransactionalQueueMessageReceiver receiverTransact)
         {
+            if (receivingMethod == null) 
+                throw new Exception("ReceiverDeterminer: \"Не задан метод получения сообщений!\"");
+            
             receiverHttp = null;
             listener = null;
             receiverTransact = null;
@@ -27,12 +30,13 @@ namespace TelemetryStorageServer
                 }
                 catch (Exception e)
                 {
-                    MessagesPrinter.PrintColorMessage(e.Message, ConsoleColor.Red);
-                    throw;
+                    throw new Exception($"HttpListener: \"{e.Message}\"");
                 }
             }
-
-            if (receivingMethod == "TransactionalQueue") receiverTransact = new TransactionalQueueMessageReceiver();
+            
+            else if (receivingMethod == "TransactionalQueue") receiverTransact = new TransactionalQueueMessageReceiver();
+            
+            else throw new Exception("ReceiverDeterminer: \"Неверно задан метод получения сообщений!\"");
         }
     }
 }
