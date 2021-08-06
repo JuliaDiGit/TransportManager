@@ -55,7 +55,7 @@ namespace TelemetryStorageServer
             }
             catch (Exception e)
             {
-                throw new Exception($"Ошибка при проверке входных данных: \"{e.Message}\"");
+                throw new Exception($"InputParamsValidator: {e.Message}");
             }
         }
     }

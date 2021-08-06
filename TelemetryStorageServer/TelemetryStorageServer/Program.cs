@@ -7,7 +7,7 @@ namespace TelemetryStorageServer
     {
         public static async Task Main(string[] args)
         {
-            Bootstrapper bootstrapper = new Bootstrapper();
+            var bootstrapper = new Bootstrapper();
 
             try
             {
@@ -16,7 +16,7 @@ namespace TelemetryStorageServer
             }
             catch (Exception e)
             {
-                MessagesPrinter.PrintColorMessage(e, ConsoleColor.Red);
+                MessagesPrinter.PrintColorMessage(e.Message, ConsoleColor.Red);
                 Console.ReadKey();
             }
         }

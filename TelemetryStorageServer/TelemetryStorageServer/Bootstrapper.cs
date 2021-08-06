@@ -9,6 +9,9 @@ namespace TelemetryStorageServer
     {
         private Messenger _messenger;
             
+        /// <summary>
+        ///     метод Initialize инициализирует необходимые сервисы
+        /// </summary>
         public void Initialize()
         {
             try
@@ -17,7 +20,7 @@ namespace TelemetryStorageServer
                 
                 DbInitialization.Start();
                 
-                ReceiverDeterminer.Determine(receivingMethod, 
+                MessageReceiverInstaller.InstallReceiver(receivingMethod, 
                                              out var receiverHttp, 
                                              out var listener, 
                                              out var receiverTransact);
@@ -34,11 +37,23 @@ namespace TelemetryStorageServer
             }
         }
 
+        /// <summary>
+        ///     метод RunAsync запускает работу необходимых сервисов
+        /// </summary>
         public async Task RunAsync()
         {
             if (_messenger == null) throw new Exception("Bootstrapper должен быть иницализирован до запуска!");
-            
-            await _messenger.StartAsync();
+
+            try
+            {
+                await _messenger.StartAsync();
+            }
+            catch (Exception)
+            {
+                Console.WriteLine();
+                MessagesPrinter.PrintColorMessage("Bootstrapper: Ошибка запуска Messenger!", ConsoleColor.Red);
+                throw;
+            }
         }
     }
 }

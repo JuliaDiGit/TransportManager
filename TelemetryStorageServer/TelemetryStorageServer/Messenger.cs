@@ -7,6 +7,9 @@ using Services;
 
 namespace TelemetryStorageServer
 {
+    /// <summary>
+    ///     класс Messenger используется для работы с сообщениями
+    /// </summary>
     public class Messenger
     {
         private readonly string _receivingMethod;
@@ -43,6 +46,10 @@ namespace TelemetryStorageServer
             }
         }
 
+        /// <summary>
+        ///     метод GetMessagesAsync получает сообщения тем способом,
+        ///     который был указан при создании экземпляра класса Messenger
+        /// </summary>
         private async Task<List<byte[]>> GetMessagesAsync()
         {
             Task<List<byte[]>> byteArraysTask = null;
@@ -51,16 +58,30 @@ namespace TelemetryStorageServer
                 
             if (_receivingMethod == "Http")
             {
-                byteArraysTask = _receiverHttp?.Listen(_listener); //начинаем слушать в ожидании сообщений
+                try
+                {
+                    byteArraysTask = _receiverHttp.Listen(_listener); //начинаем слушать в ожидании сообщений
+                }
+                catch (Exception e)
+                {
+                    throw new Exception($"Messenger/HttpMessageReceiver: {e.Message}");
+                }
             }
 
             if (_receivingMethod == "TransactionalQueue")
             {
-                Task peek = _receiverTransact?.PeekMessageAsync(); //проверяем, есть ли сообщения в очереди
-                TaskWaiter.Wait(peek); //ждём, когда сообщения появятся 
+                try
+                {
+                    Task peek = _receiverTransact?.PeekMessageAsync(); //проверяем, есть ли сообщения в очереди
+                    TaskWaiter.Wait(peek); //ждём, когда сообщения появятся 
 
-                Console.Write("\nПринимаем сообщения.");
-                byteArraysTask = _receiverTransact?.ReceiveTransactMessagesAsync(); //принимаем сообщения
+                    Console.Write("\nПринимаем сообщения.");
+                    byteArraysTask = _receiverTransact?.ReceiveTransactMessagesAsync(); //принимаем сообщения
+                }
+                catch (Exception e)
+                { 
+                    throw new Exception($"Messenger/TransactionalQueueMessageReceiver {e.Message}");
+                }
             }
 
             TaskWaiter.Wait(byteArraysTask); //ждём, когда сообщения появятся 
@@ -72,6 +93,11 @@ namespace TelemetryStorageServer
             return byteArrays;
         }
         
+        /// <summary>
+        ///     метод AddMessagesToDbAsync распаковывает полученные пакеты
+        ///     и добавляет получившиеся объекты (сообщения) в БД
+        /// </summary>
+        /// <param name="byteArrays">сообщения в виде списка массивов байт</param>
         private async Task AddMessagesToDbAsync(List<byte[]> byteArrays)
         {
             foreach (var byteArr in byteArrays)
