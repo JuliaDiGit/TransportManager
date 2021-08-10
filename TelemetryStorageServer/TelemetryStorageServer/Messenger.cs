@@ -14,21 +14,20 @@ namespace TelemetryStorageServer
     {
         private readonly string _receivingMethod;
         private readonly HttpMessageReceiver _receiverHttp;
-        private readonly HttpListener _listener;
         private readonly TransactionalQueueMessageReceiver _receiverTransact;
         private readonly TelemetryPacketsService _service;
 
-        public Messenger(string receivingMethod, 
-                         HttpMessageReceiver receiverHttp, 
-                         HttpListener listener, 
-                         TransactionalQueueMessageReceiver receiverTransact,
-                         TelemetryPacketsService service)
+        public Messenger(MessageReceiver messageReceiver, TelemetryPacketsService service)
         {
-            _receivingMethod = receivingMethod;
-            _receiverHttp = receiverHttp;
-            _listener = listener;
-            _receiverTransact = receiverTransact;
-            _service = service;
+            if (messageReceiver == null) throw new ArgumentNullException(nameof(messageReceiver));
+            
+            _service = service ?? throw new ArgumentNullException(nameof(service));
+
+            _receivingMethod = messageReceiver.ReceivingMethod 
+                               ?? throw new NullReferenceException("ReceivingMethod");
+            
+            _receiverHttp = messageReceiver.ReceiverHttp;
+            _receiverTransact = messageReceiver.ReceiverTransact;
         }
 
         public async Task StartAsync()
@@ -52,45 +51,40 @@ namespace TelemetryStorageServer
         /// </summary>
         private async Task<List<byte[]>> GetMessagesAsync()
         {
-            Task<List<byte[]>> byteArraysTask = null;
-                
             Console.Write("\nОжидаем поступления сообщений.");
-                
-            if (_receivingMethod == "Http")
-            {
-                try
-                {
-                    byteArraysTask = _receiverHttp.Listen(_listener); //начинаем слушать в ожидании сообщений
-                }
-                catch (Exception e)
-                {
-                    throw new Exception($"Messenger/HttpMessageReceiver: {e.Message}");
-                }
-            }
 
-            if (_receivingMethod == "TransactionalQueue")
+            try
             {
-                try
+                Task<List<byte[]>> byteArraysTask;
+                
+                if (_receivingMethod == "Http")
+                {
+                    byteArraysTask = _receiverHttp.Listen(); //начинаем слушать в ожидании сообщений
+                }
+
+                else if (_receivingMethod == "TransactionalQueue")
                 {
                     Task peek = _receiverTransact?.PeekMessageAsync(); //проверяем, есть ли сообщения в очереди
-                    TaskWaiter.Wait(peek); //ждём, когда сообщения появятся 
+                    TaskWaiter.WaitAndPrintDot(peek); //ждём, когда сообщения появятся 
 
                     Console.Write("\nПринимаем сообщения.");
                     byteArraysTask = _receiverTransact?.ReceiveTransactMessagesAsync(); //принимаем сообщения
                 }
-                catch (Exception e)
-                { 
-                    throw new Exception($"Messenger/TransactionalQueueMessageReceiver {e.Message}");
-                }
-            }
 
-            TaskWaiter.Wait(byteArraysTask); //ждём, когда сообщения появятся 
+                else throw new Exception("Неверно задан метод получения сообщений!");
 
-            List<byte[]> byteArrays = null;
+                TaskWaiter.WaitAndPrintDot(byteArraysTask); //ждём, когда сообщения появятся 
+
+                List<byte[]> byteArrays = null;
                 
-            if (byteArraysTask != null) byteArrays = await byteArraysTask; //получаем сообщения
+                if (byteArraysTask != null) byteArrays = await byteArraysTask; //получаем сообщения
 
-            return byteArrays;
+                return byteArrays;
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Messenger: {e.Message}");
+            }
         }
         
         /// <summary>

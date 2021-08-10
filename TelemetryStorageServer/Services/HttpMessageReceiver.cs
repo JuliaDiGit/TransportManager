@@ -10,11 +10,17 @@ namespace Services
 {
     public class HttpMessageReceiver
     {
-        public async Task<List<byte[]>> Listen(HttpListener listener)
+        private readonly HttpListener _listener;
+
+        public HttpMessageReceiver(HttpListener listener)
+        {
+            _listener = listener ?? throw new ArgumentNullException(nameof(listener));
+        }
+        public async Task<List<byte[]>> Listen()
         {
             try
             {
-                HttpListenerContext context = await listener.GetContextAsync(); // Ожидание входящего запроса
+                HttpListenerContext context = await _listener.GetContextAsync(); // Ожидание входящего запроса
                 HttpListenerRequest request = context.Request; // Объект запроса
                 HttpListenerResponse response = context.Response; // Объект ответа
 
@@ -36,8 +42,7 @@ namespace Services
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
-                return null;
+                throw new Exception($"HttpMessageReceiver: {e.Message}");
             }
         }
     }

@@ -16,18 +16,15 @@ namespace TelemetryStorageServer
         {
             try
             {
-                InputParamsValidator.Validate(out var receivingMethod);
+                InputParamsValidator.Validate();
                 
                 DbInitialization.Start();
                 
-                MessageReceiverInstaller.InstallReceiver(receivingMethod, 
-                                             out var receiverHttp, 
-                                             out var listener, 
-                                             out var receiverTransact);
+                var messageReceiver = new MessageReceiver();
 
                 var service = new TelemetryPacketsService(new TelemetryPacketsRepository());
                 
-                _messenger = new Messenger(receivingMethod, receiverHttp, listener, receiverTransact, service);
+                _messenger = new Messenger(messageReceiver, service);
             }
             catch (Exception)
             {

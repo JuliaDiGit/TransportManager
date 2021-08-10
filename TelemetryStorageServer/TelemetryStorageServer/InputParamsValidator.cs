@@ -8,8 +8,7 @@ namespace TelemetryStorageServer
         /// <summary>
         ///     метод Validate проверяет верно ли заданы параметры в App.config
         /// </summary>
-        /// <param name="receivingMethod">способ получения сообщений</param>
-        public static void Validate(out string receivingMethod)
+        public static void Validate()
         {
             string path = null;
             int messagesCount = default;
@@ -17,7 +16,7 @@ namespace TelemetryStorageServer
 
             try
             {
-                receivingMethod = ConfigurationManager.AppSettings.Get("ReceivingMethod");
+                var receivingMethod = ConfigurationManager.AppSettings.Get("ReceivingMethod");
 
                 if (receivingMethod != "TransactionalQueue" && receivingMethod != "Http")
                 {

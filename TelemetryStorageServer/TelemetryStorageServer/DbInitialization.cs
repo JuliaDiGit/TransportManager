@@ -15,7 +15,7 @@ namespace TelemetryStorageServer
                 Console.WriteLine("\nЗапущена инициализация базы данных телеметрии.");
                 
                 Console.Write("\nПожалуйста, подождите.");
-                TaskWaiter.Wait(taskStatisticsDb);
+                TaskWaiter.WaitAndPrintDot(taskStatisticsDb);
 
                 if (taskStatisticsDb.Exception != null)
                 {
