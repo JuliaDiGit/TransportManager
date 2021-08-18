@@ -7,11 +7,14 @@ namespace TelemetryStorageServer
     {
         public static async Task Main(string[] args)
         {
-            var bootstrapper = new Bootstrapper();
 
             try
             {
-                bootstrapper.Initialize();
+                InputParamsValidator.Validate();
+                
+                DbInitialization.Start();
+                
+                var bootstrapper = new Bootstrapper();
                 await bootstrapper.RunAsync();
             }
             catch (Exception e)

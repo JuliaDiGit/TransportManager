@@ -8,18 +8,11 @@ namespace TelemetryStorageServer
     public class Bootstrapper
     {
         private Messenger _messenger;
-            
-        /// <summary>
-        ///     метод Initialize инициализирует необходимые сервисы
-        /// </summary>
-        public void Initialize()
+        
+        public Bootstrapper()
         {
             try
             {
-                InputParamsValidator.Validate();
-                
-                DbInitialization.Start();
-                
                 var messageReceiver = new MessageReceiver();
 
                 var service = new TelemetryPacketsService(new TelemetryPacketsRepository());
