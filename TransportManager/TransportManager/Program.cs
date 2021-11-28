@@ -1,8 +1,8 @@
 using System;
 using System.Diagnostics;
 using System.IO;
-using Logger.Abstract;
-using UI;
+using TransportManager.Logger.Abstract;
+using TransportManager.UI;
 
 namespace TransportManager
 {
@@ -22,7 +22,11 @@ namespace TransportManager
             
             try
             {
-                Process.Start(@"..\..\..\..\TelemetryStorageServer\TelemetryStorageServer\bin\Debug\TelemetryStorageServer.exe");
+                var projectPath = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\..\..\"));
+                var serverPath = Path.Combine(projectPath, 
+                                              @"TelemetryStorageServer\TelemetryStorageServer\bin\Debug\TelemetryStorageServer.exe");
+
+                Process.Start(serverPath);
 
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.Green;
@@ -36,7 +40,8 @@ namespace TransportManager
                 Console.WriteLine(Resources.Fail_StartStorageServer);
                 Console.WriteLine(Resources.Error + e.Message);
                 Console.ResetColor();
-                
+
+                Console.ReadKey();
                 return;
             }
             

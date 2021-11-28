@@ -60,17 +60,17 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DataEF\DataEF.csproj">
+    <ProjectReference Include="..\TransportManager.DataEF\TransportManager.DataEF.csproj">
       <Project>{0ec8ccda-063e-49f3-a4a8-bf22989a9d01}</Project>
-      <Name>DataEF</Name>
+      <Name>TransportManager.DataEF</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Loggers\Loggers.csproj">
-      <Project>{83c8662b-61f9-4969-bc39-1cc953ca9cf6}</Project>
-      <Name>Loggers</Name>
+    <ProjectReference Include="..\TransportManager.Logger\TransportManager.Logger.csproj">
+      <Project>{C5F65D10-3178-4379-9D17-14B290001777}</Project>
+      <Name>TransportManager.Logger</Name>
     </ProjectReference>
-    <ProjectReference Include="..\UI\UI.csproj">
+    <ProjectReference Include="..\TransportManager.UI\TransportManager.UI.csproj">
       <Project>{0172756e-49ce-4258-ad6b-bcf6304b044a}</Project>
-      <Name>UI</Name>
+      <Name>TransportManager.UI</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

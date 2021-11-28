@@ -5,37 +5,35 @@ VisualStudioVersion = 16.0.30711.63
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportManager", "TransportManager\TransportManager.csproj", "{AD3947BC-9D74-489B-8FFE-03226CDBC4BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{E3D879A8-BD00-4193-B0D3-A18046BB12B1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportManager.DataXML", "TransportManager.DataXML\TransportManager.DataXML.csproj", "{E3D879A8-BD00-4193-B0D3-A18046BB12B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{069D0E5C-47F7-4189-A21D-A5A62997BE8A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportManager.Entities", "TransportManager.Entities\TransportManager.Entities.csproj", "{069D0E5C-47F7-4189-A21D-A5A62997BE8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{24E88C97-0D0E-46D4-A052-5C32F74999C2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportManager.Domain", "TransportManager.Domain\TransportManager.Domain.csproj", "{24E88C97-0D0E-46D4-A052-5C32F74999C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{ECB29E8F-7D61-43C4-B46E-871AAA454B49}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportManager.Services", "TransportManager.Services\TransportManager.Services.csproj", "{ECB29E8F-7D61-43C4-B46E-871AAA454B49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mappers", "Mappers\Mappers.csproj", "{2A4392DE-D357-49E3-B455-B579CBE4973E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportManager.Mappers", "TransportManager.Mappers\TransportManager.Mappers.csproj", "{2A4392DE-D357-49E3-B455-B579CBE4973E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{074987F6-2F3A-44D4-BF04-0F4CC7608C58}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportManager.API", "TransportManager.API\TransportManager.API.csproj", "{074987F6-2F3A-44D4-BF04-0F4CC7608C58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "UI\UI.csproj", "{0172756E-49CE-4258-AD6B-BCF6304B044A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportManager.UI", "TransportManager.UI\TransportManager.UI.csproj", "{0172756E-49CE-4258-AD6B-BCF6304B044A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{C4915C71-5F5E-4C8D-8564-04B4A55E8B49}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportManager.Models", "TransportManager.Models\TransportManager.Models.csproj", "{C4915C71-5F5E-4C8D-8564-04B4A55E8B49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loggers", "Loggers\Loggers.csproj", "{83C8662B-61F9-4969-BC39-1CC953CA9CF6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportManager.Events", "TransportManager.Events\TransportManager.Events.csproj", "{7B87E6BE-0F8E-4DCF-8C6D-2209014023D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Events", "Events\Events.csproj", "{7B87E6BE-0F8E-4DCF-8C6D-2209014023D0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportManager.Generators", "TransportManager.Generators\TransportManager.Generators.csproj", "{5AEFD1D9-1171-48BA-87A1-9AE3A70B5331}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exceptions", "Exceptions\Exceptions.csproj", "{FAD82ACA-4191-44FD-BB11-43DD0B5D9C8C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportManager.DataADO", "TransportManager.DataADO\TransportManager.DataADO.csproj", "{D13403DE-5284-4422-B372-61CF6B64C671}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generators", "Generators\Generators.csproj", "{5AEFD1D9-1171-48BA-87A1-9AE3A70B5331}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportManager.DataEF", "TransportManager.DataEF\TransportManager.DataEF.csproj", "{0EC8CCDA-063E-49F3-A4A8-BF22989A9D01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enums", "Enums\Enums.csproj", "{C10854C8-FA16-436B-8D6F-23ED9F1E54A3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportManager.Statistics", "TransportManager.Statistics\TransportManager.Statistics.csproj", "{3C0072F1-22F9-4D81-8F0F-478A4168E151}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataSQL", "DataSQL\DataSQL.csproj", "{D13403DE-5284-4422-B372-61CF6B64C671}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportManager.Logger", "TransportManager.Logger\TransportManager.Logger.csproj", "{C5F65D10-3178-4379-9D17-14B290001777}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataEF", "DataEF\DataEF.csproj", "{0EC8CCDA-063E-49F3-A4A8-BF22989A9D01}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Statistics", "Statistics\Statistics.csproj", "{3C0072F1-22F9-4D81-8F0F-478A4168E151}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportManager.Common", "TransportManager.Common\TransportManager.Common.csproj", "{E45CB6DB-7192-4FE8-9011-D5349E60C6EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,26 +77,14 @@ Global
 		{C4915C71-5F5E-4C8D-8564-04B4A55E8B49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4915C71-5F5E-4C8D-8564-04B4A55E8B49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4915C71-5F5E-4C8D-8564-04B4A55E8B49}.Release|Any CPU.Build.0 = Release|Any CPU
-		{83C8662B-61F9-4969-BC39-1CC953CA9CF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{83C8662B-61F9-4969-BC39-1CC953CA9CF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{83C8662B-61F9-4969-BC39-1CC953CA9CF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{83C8662B-61F9-4969-BC39-1CC953CA9CF6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7B87E6BE-0F8E-4DCF-8C6D-2209014023D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7B87E6BE-0F8E-4DCF-8C6D-2209014023D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B87E6BE-0F8E-4DCF-8C6D-2209014023D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B87E6BE-0F8E-4DCF-8C6D-2209014023D0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FAD82ACA-4191-44FD-BB11-43DD0B5D9C8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FAD82ACA-4191-44FD-BB11-43DD0B5D9C8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FAD82ACA-4191-44FD-BB11-43DD0B5D9C8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FAD82ACA-4191-44FD-BB11-43DD0B5D9C8C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5AEFD1D9-1171-48BA-87A1-9AE3A70B5331}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5AEFD1D9-1171-48BA-87A1-9AE3A70B5331}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AEFD1D9-1171-48BA-87A1-9AE3A70B5331}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AEFD1D9-1171-48BA-87A1-9AE3A70B5331}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C10854C8-FA16-436B-8D6F-23ED9F1E54A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C10854C8-FA16-436B-8D6F-23ED9F1E54A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C10854C8-FA16-436B-8D6F-23ED9F1E54A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C10854C8-FA16-436B-8D6F-23ED9F1E54A3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D13403DE-5284-4422-B372-61CF6B64C671}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D13403DE-5284-4422-B372-61CF6B64C671}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D13403DE-5284-4422-B372-61CF6B64C671}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -111,6 +97,14 @@ Global
 		{3C0072F1-22F9-4D81-8F0F-478A4168E151}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C0072F1-22F9-4D81-8F0F-478A4168E151}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C0072F1-22F9-4D81-8F0F-478A4168E151}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5F65D10-3178-4379-9D17-14B290001777}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5F65D10-3178-4379-9D17-14B290001777}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5F65D10-3178-4379-9D17-14B290001777}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5F65D10-3178-4379-9D17-14B290001777}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E45CB6DB-7192-4FE8-9011-D5349E60C6EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E45CB6DB-7192-4FE8-9011-D5349E60C6EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E45CB6DB-7192-4FE8-9011-D5349E60C6EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E45CB6DB-7192-4FE8-9011-D5349E60C6EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
