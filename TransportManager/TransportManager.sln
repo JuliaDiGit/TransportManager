@@ -31,7 +31,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportManager.DataEF", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportManager.Statistics", "TransportManager.Statistics\TransportManager.Statistics.csproj", "{3C0072F1-22F9-4D81-8F0F-478A4168E151}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportManager.Logger", "TransportManager.Logger\TransportManager.Logger.csproj", "{C5F65D10-3178-4379-9D17-14B290001777}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportManager.Loggers", "TransportManager.Loggers\TransportManager.Loggers.csproj", "{C5F65D10-3178-4379-9D17-14B290001777}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportManager.Common", "TransportManager.Common\TransportManager.Common.csproj", "{E45CB6DB-7192-4FE8-9011-D5349E60C6EE}"
 EndProject

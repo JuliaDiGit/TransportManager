@@ -64,9 +64,9 @@
       <Project>{0ec8ccda-063e-49f3-a4a8-bf22989a9d01}</Project>
       <Name>TransportManager.DataEF</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TransportManager.Logger\TransportManager.Logger.csproj">
-      <Project>{C5F65D10-3178-4379-9D17-14B290001777}</Project>
-      <Name>TransportManager.Logger</Name>
+    <ProjectReference Include="..\TransportManager.Loggers\TransportManager.Loggers.csproj">
+      <Project>{c5f65d10-3178-4379-9d17-14b290001777}</Project>
+      <Name>TransportManager.Loggers</Name>
     </ProjectReference>
     <ProjectReference Include="..\TransportManager.UI\TransportManager.UI.csproj">
       <Project>{0172756e-49ce-4258-ad6b-bcf6304b044a}</Project>

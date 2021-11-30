@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using TransportManager.Domain;
 using TransportManager.Events;
-using TransportManager.Logger.Abstract;
+using TransportManager.Loggers.Abstract;
 using TransportManager.Models;
 using TransportManager.Services.Abstract;
 using TransportManager.Services.Properties;

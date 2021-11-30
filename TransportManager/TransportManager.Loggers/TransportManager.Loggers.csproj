@@ -7,8 +7,8 @@
     <ProjectGuid>{C5F65D10-3178-4379-9D17-14B290001777}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TransportManager.Logger</RootNamespace>
-    <AssemblyName>TransportManager.Logger</AssemblyName>
+    <RootNamespace>TransportManager.Loggers</RootNamespace>
+    <AssemblyName>TransportManager.Loggers</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

@@ -1,7 +1,7 @@
 using System;
 using TransportManager.API.Controllers;
 using TransportManager.DataEF.Repositories;
-using TransportManager.Logger.Abstract;
+using TransportManager.Loggers.Abstract;
 using TransportManager.Models;
 using TransportManager.Services;
 using TransportManager.Services.Decorators.UsersServiceDecorators;

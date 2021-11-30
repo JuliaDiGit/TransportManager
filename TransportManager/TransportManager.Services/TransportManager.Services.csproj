@@ -84,9 +84,9 @@
       <Project>{7b87e6be-0f8e-4dcf-8c6d-2209014023d0}</Project>
       <Name>TransportManager.Events</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TransportManager.Logger\TransportManager.Logger.csproj">
-      <Project>{C5F65D10-3178-4379-9D17-14B290001777}</Project>
-      <Name>TransportManager.Logger</Name>
+    <ProjectReference Include="..\TransportManager.Loggers\TransportManager.Loggers.csproj">
+      <Project>{c5f65d10-3178-4379-9d17-14b290001777}</Project>
+      <Name>TransportManager.Loggers</Name>
     </ProjectReference>
     <ProjectReference Include="..\TransportManager.Mappers\TransportManager.Mappers.csproj">
       <Project>{2a4392de-d357-49e3-b455-b579cbe4973e}</Project>

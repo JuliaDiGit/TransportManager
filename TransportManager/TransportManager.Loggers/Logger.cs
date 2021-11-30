@@ -1,8 +1,8 @@
 using System;
 using System.IO;
-using TransportManager.Logger.Abstract;
+using TransportManager.Loggers.Abstract;
 
-namespace TransportManager.Logger
+namespace TransportManager.Loggers
 {
     public class Logger : ILogger
     {

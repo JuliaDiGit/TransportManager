@@ -8,12 +8,13 @@ using TransportManager.API.Controllers;
 using TransportManager.Common.Enums;
 using TransportManager.DataEF.Repositories;
 using TransportManager.Generators;
-using TransportManager.Logger.Abstract;
+using TransportManager.Loggers.Abstract;
 using TransportManager.Models;
 using TransportManager.Services;
 using TransportManager.Services.Decorators.CompaniesServiceDecorators;
 using TransportManager.Services.Decorators.DriversServiceDecorators;
 using TransportManager.Services.Decorators.VehiclesServiceDecorators;
+using TransportManager.UI.Helpers;
 using TransportManager.UI.Properties;
 
 namespace TransportManager.UI
@@ -37,7 +38,8 @@ namespace TransportManager.UI
             {
                 Menu();
 
-                PrintMagentaMessage(Resources.Message_EnterCommandNumber);
+                MessagePrinter.PrintConsoleColorMessage(Resources.Message_EnterCommandNumber,
+                                                        ConsoleColor.Magenta);
                 string command = Console.ReadLine();
 
                 switch (command)
@@ -58,14 +60,16 @@ namespace TransportManager.UI
                         isExit = false;
                         break;
                     default:
-                        PrintRedMessage(Resources.Error_IncorrectData + "\n");
+                        MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n",
+                                                                ConsoleColor.Red);
                         break;
                 }
             }
 
             void Menu()
             {
-                PrintCyanMessage("\nКакую категорию выбрать?");
+                MessagePrinter.PrintConsoleColorMessage("\nКакую категорию выбрать?",
+                                                        ConsoleColor.Cyan);
                 Console.WriteLine("1. Компании");
                 Console.WriteLine("2. Водители");
                 Console.WriteLine("3. Транспортые средства");
@@ -83,7 +87,8 @@ namespace TransportManager.UI
             {
                 CompaniesMenu();
 
-                PrintMagentaMessage(Resources.Message_EnterCommandNumber);
+                MessagePrinter.PrintConsoleColorMessage(Resources.Message_EnterCommandNumber,
+                                                        ConsoleColor.Magenta);
                 string command = Console.ReadLine();
 
                 switch (command)
@@ -113,13 +118,15 @@ namespace TransportManager.UI
                         isExit = false;
                         break;
                     default:
-                        PrintRedMessage(Resources.Error_IncorrectData + "\n");
+                        MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n",
+                                                                ConsoleColor.Red);
                         break;
                 }
 
                 void CompaniesMenu()
                 {
-                    PrintCyanMessage("\nКакую команду выполнить?");
+                    MessagePrinter.PrintConsoleColorMessage("\nКакую команду выполнить?",
+                                                            ConsoleColor.Cyan);
                     Console.WriteLine("1. Показать все компании");
                     Console.WriteLine("2. Показать данные компании");
                     Console.WriteLine("3. Показать всех водителей компании");
@@ -133,7 +140,8 @@ namespace TransportManager.UI
                 //1. Показать все компании
                 void Command1()
                 {
-                    PrintGrayMessage("Показать все компании\n");
+                    MessagePrinter.PrintConsoleColorMessage("Показать все компании\n",
+                                                            ConsoleColor.Gray);
 
                     try
                     {
@@ -150,32 +158,38 @@ namespace TransportManager.UI
 
                         if (companies.Count > 0)
                         {
-                            PrintYellowMessage("\nСписок всех компаний");
+                            MessagePrinter.PrintConsoleColorMessage("\nСписок всех компаний",
+                                                                    ConsoleColor.Yellow);
                             companies.ForEach(company =>
                             {
                                 string info = $"id: {company.CompanyId}, " +
                                               $"название: {company.CompanyName}";
 
                                 if (!company.IsDeleted) Console.WriteLine(info);
-                                else PrintRedMessage(info + " (удалено!)");
+                                else MessagePrinter.PrintConsoleColorMessage(info + " (удалено!)",
+                                                                             ConsoleColor.Red);
                             });
                         }
-                        else PrintYellowMessage("В данный момент список компаний пуст");
+                        else MessagePrinter.PrintConsoleColorMessage("В данный момент список компаний пуст",
+                                                                     ConsoleColor.Yellow);
                     }
                     catch (Exception e)
                     {
-                        PrintRedMessage("\n" + e.Message);
+                        MessagePrinter.PrintConsoleColorMessage("\n" + e.Message,
+                                                                ConsoleColor.Red);
                     }
                 }
 
                 //2. Показать данные компании
                 void Command2()
                 {
-                    PrintGrayMessage("Показать данные компании\n");
+                    MessagePrinter.PrintConsoleColorMessage("Показать данные компании\n",
+                                                            ConsoleColor.Gray);
 
                     while (true)
                     {
-                        PrintGrayMessage("Введите id компании (цифры): ");
+                        MessagePrinter.PrintConsoleColorMessage("Введите id компании (цифры): ",
+                                                                ConsoleColor.Gray);
                         string sId = Console.ReadLine();
 
                         if (int.TryParse(sId, out int companyId))
@@ -195,14 +209,16 @@ namespace TransportManager.UI
 
                                 if (company == null || company.IsDeleted)
                                 {
-                                    PrintRedMessage("\n" + Resources.Error_CompanyNotFound);
+                                    MessagePrinter.PrintConsoleColorMessage("\n" + Resources.Error_CompanyNotFound,
+                                                                            ConsoleColor.Red);
                                     break;
                                 }
 
                                 var notRemoteDrivers = company.Drivers.Where(d => !d.IsDeleted).ToList();
                                 var notRemoteVehicles = company.Vehicles.Where(v => !v.IsDeleted).ToList();
 
-                                PrintYellowMessage($"\nДанные компании id {companyId}");
+                                MessagePrinter.PrintConsoleColorMessage($"\nДанные компании id {companyId}",
+                                                                        ConsoleColor.Yellow);
                                 Console.WriteLine($"Название: {company.CompanyName}" +
                                                   $"\nКол-во водителей: {notRemoteDrivers.Count}" +
                                                   $"\nКол-во ТС: {notRemoteVehicles.Count}" +
@@ -212,27 +228,32 @@ namespace TransportManager.UI
                             }
                             catch (Exception e)
                             {
-                                PrintRedMessage("\n" + e.Message);
+                                MessagePrinter.PrintConsoleColorMessage("\n" + e.Message,
+                                                                        ConsoleColor.Red);
                             }
                         }
 
-                        PrintRedMessage(Resources.Error_IncorrectData + "\n");
+                        MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n",
+                                                                ConsoleColor.Red);
                     }
                 }
 
                 //3. Показать всех водителей компании
                 void Command3()
                 {
-                    PrintGrayMessage("Показать всех водителей компании\n");
+                    MessagePrinter.PrintConsoleColorMessage("Показать всех водителей компании\n",
+                                                            ConsoleColor.Gray);
 
                     int companyId;
                     while (true)
                     {
-                        PrintGrayMessage("Введите id компании (цифры): ");
+                        MessagePrinter.PrintConsoleColorMessage("Введите id компании (цифры): ",
+                                                                ConsoleColor.Gray);
                         string sId = Console.ReadLine();
 
                         if (int.TryParse(sId, out companyId)) break;
-                        PrintRedMessage(Resources.Error_IncorrectData + "\n");
+                        MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n",
+                                                                ConsoleColor.Red);
                     }
 
                     try
@@ -250,7 +271,8 @@ namespace TransportManager.UI
 
                         if (company == null || company.IsDeleted)
                         {
-                            PrintRedMessage("\n" + Resources.Error_CompanyNotFound);
+                            MessagePrinter.PrintConsoleColorMessage("\n" + Resources.Error_CompanyNotFound,
+                                                                    ConsoleColor.Red);
                             return;
                         }
 
@@ -258,9 +280,9 @@ namespace TransportManager.UI
 
                         if (notRemoteDrivers.Count > 0)
                         {
-                            PrintYellowMessage("\nСписок водителей компании " +
-                                               $"{company.CompanyName} " +
-                                               $"(id {companyId})");
+                            MessagePrinter.PrintConsoleColorMessage("\nСписок водителей компании " +
+                                                                    $"{company.CompanyName} (id {companyId})",
+                                                                    ConsoleColor.Yellow);
 
                             foreach (var driver in notRemoteDrivers)
                             {
@@ -268,29 +290,33 @@ namespace TransportManager.UI
                                                   $"имя: {driver.Name}");
                             }
                         }
-                        else PrintYellowMessage("\nВ данный момент у компании " +
-                                                $"{company.CompanyName} (id {companyId}) " +
-                                                "ещё нет водителей");
+                        else MessagePrinter.PrintConsoleColorMessage("\nВ данный момент у компании " +
+                                                                     $"{company.CompanyName} (id {companyId}) ещё нет водителей",
+                                                                     ConsoleColor.Yellow);
                     }
                     catch (Exception e)
                     {
-                        PrintRedMessage("\n" + e.Message);
+                        MessagePrinter.PrintConsoleColorMessage("\n" + e.Message,
+                                                                ConsoleColor.Red);
                     }
                 }
 
                 //4. Показать все ТС компании
                 void Command4()
                 {
-                    PrintGrayMessage("Показать все ТС компании\n");
+                    MessagePrinter.PrintConsoleColorMessage("Показать все ТС компании\n",
+                                                            ConsoleColor.Gray);
 
                     int companyId;
                     while (true)
                     {
-                        PrintGrayMessage("Введите id компании (цифры): ");
+                        MessagePrinter.PrintConsoleColorMessage("Введите id компании (цифры): ",
+                                                                ConsoleColor.Gray);
                         string sId = Console.ReadLine();
 
                         if (int.TryParse(sId, out companyId)) break;
-                        PrintRedMessage(Resources.Error_IncorrectData + "\n");
+                        MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n",
+                                                                ConsoleColor.Red);
                     }
 
                     try
@@ -308,7 +334,8 @@ namespace TransportManager.UI
 
                         if (company == null || company.IsDeleted)
                         {
-                            PrintRedMessage("\n" + Resources.Error_CompanyNotFound);
+                            MessagePrinter.PrintConsoleColorMessage("\n" + Resources.Error_CompanyNotFound,
+                                                                    ConsoleColor.Red);
                             return;
                         }
 
@@ -316,8 +343,8 @@ namespace TransportManager.UI
 
                         if (notRemoteVehicles.Count > 0)
                         {
-                            PrintYellowMessage($"\nСписок ТС компании {company.CompanyName} " +
-                                               $"(id {companyId})");
+                            MessagePrinter.PrintConsoleColorMessage($"\nСписок ТС компании {company.CompanyName} (id {companyId})",
+                                                                    ConsoleColor.Yellow);
 
                             foreach (var vehicle in notRemoteVehicles)
                             {
@@ -327,35 +354,40 @@ namespace TransportManager.UI
                                                   $"дата создания (в базе): {vehicle.CreatedDate}");
                             }
                         }
-                        else PrintYellowMessage("\nВ данный момент у компании " +
-                                                $"{company.CompanyName} (id {companyId})" +
-                                                " ещё нет ТС");
+                        else MessagePrinter.PrintConsoleColorMessage("\nВ данный момент у компании " +
+                                                                     $"{company.CompanyName} (id {companyId}) ещё нет ТС",
+                                                                     ConsoleColor.Yellow);
                     }
                     catch (Exception e)
                     {
-                        PrintRedMessage("\n" + e.Message);
+                        MessagePrinter.PrintConsoleColorMessage("\n" + e.Message,
+                                                                ConsoleColor.Red);
                     }
                 }
 
                 //5. Добавить компанию
                 void Command5()
                 {
-                    PrintGrayMessage("Добавить компанию\n");
+                    MessagePrinter.PrintConsoleColorMessage("Добавить компанию\n",
+                                                            ConsoleColor.Gray);
 
                     string name;
                     while (true)
                     {
-                        PrintGrayMessage("Введите название компании: ");
+                        MessagePrinter.PrintConsoleColorMessage("Введите название компании: ",
+                                                                ConsoleColor.Gray);
                         name = Console.ReadLine();
 
                         if (!string.IsNullOrWhiteSpace(name)) break;
-                        PrintRedMessage(Resources.Error_IncorrectData + "\n");
+                        MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n",
+                                                                ConsoleColor.Red);
                     }
 
                     int companyId;
                     while (true)
                     {
-                        PrintGrayMessage("Введите уникальный id компании (цифры): ");
+                        MessagePrinter.PrintConsoleColorMessage("Введите уникальный id компании (цифры): ",
+                                                                ConsoleColor.Gray);
                         string sId = Console.ReadLine();
 
                         if (int.TryParse(sId, out companyId))
@@ -363,7 +395,8 @@ namespace TransportManager.UI
                             break;
                         }
 
-                        PrintRedMessage(Resources.Error_IncorrectData + "\n");
+                        MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n",
+                                                                ConsoleColor.Red);
                     }
 
                     try
@@ -381,7 +414,8 @@ namespace TransportManager.UI
 
                         if (company != null)
                         {
-                            PrintRedMessage($"\nКомпания id {companyId} уже существует!");
+                            MessagePrinter.PrintConsoleColorMessage($"\nКомпания id {companyId} уже существует!",
+                                                                    ConsoleColor.Red);
                             return;
                         }
 
@@ -395,23 +429,27 @@ namespace TransportManager.UI
                                                      .GetAwaiter()
                                                      .GetResult();
 
-                        PrintGreenMessage($"\nКомпания {company.CompanyName} " +
-                                          $"(id {companyId}) - добавлена.");
+                        MessagePrinter.PrintConsoleColorMessage($"\nКомпания {company.CompanyName} " +
+                                                                $"(id {companyId}) - добавлена.",
+                                                                ConsoleColor.Green);
                     }
                     catch (Exception e)
                     {
-                        PrintRedMessage("\n" + e.Message);
+                        MessagePrinter.PrintConsoleColorMessage("\n" + e.Message,
+                                                                ConsoleColor.Red);
                     }
                 }
 
                 //6. Обновить данные компании
                 void Command6()
                 {
-                    PrintGrayMessage("Обновить данные компании\n");
+                    MessagePrinter.PrintConsoleColorMessage("Обновить данные компании\n",
+                                                            ConsoleColor.Gray);
 
                     while (true)
                     {
-                        PrintGrayMessage("Введите id компании (цифры): ");
+                        MessagePrinter.PrintConsoleColorMessage("Введите id компании (цифры): ",
+                                                                ConsoleColor.Gray);
                         string sId = Console.ReadLine();
 
                         if (int.TryParse(sId, out int companyId))
@@ -431,21 +469,25 @@ namespace TransportManager.UI
 
                                 if (company == null || company.IsDeleted)
                                 {
-                                    PrintRedMessage("\n" + Resources.Error_CompanyNotFound);
+                                    MessagePrinter.PrintConsoleColorMessage("\n" + Resources.Error_CompanyNotFound,
+                                                                            ConsoleColor.Red);
                                     break;
                                 }
 
-                                PrintYellowMessage($"\nВыбрана компания {company.CompanyName} " +
-                                                   $"(id {companyId})");
+                                MessagePrinter.PrintConsoleColorMessage($"\nВыбрана компания {company.CompanyName} " +
+                                                                        $"(id {companyId})",
+                                                                        ConsoleColor.Yellow);
 
                                 string companyName;
                                 while (true)
                                 {
-                                    PrintGrayMessage("Введите новое название компании: ");
+                                    MessagePrinter.PrintConsoleColorMessage("Введите новое название компании: ",
+                                                                            ConsoleColor.Gray);
                                     companyName = Console.ReadLine();
 
                                     if (!string.IsNullOrWhiteSpace(companyName)) break;
-                                    PrintRedMessage(Resources.Error_IncorrectData + "\n");
+                                    MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n",
+                                                                            ConsoleColor.Red);
                                 }
 
                                 var updatedCompany = companiesController.AddOrUpdateCompanyAsync(new CompanyModel
@@ -458,38 +500,45 @@ namespace TransportManager.UI
                                                                         .GetAwaiter()
                                                                         .GetResult();
 
-                                PrintGreenMessage($"\nДанные компании id {updatedCompany.CompanyId} - обновлены, " +
-                                                  $"новое название - {updatedCompany.CompanyName}");
+                                MessagePrinter.PrintConsoleColorMessage($"\nДанные компании id {updatedCompany.CompanyId} - обновлены, " +
+                                                                        $"новое название - {updatedCompany.CompanyName}",
+                                                                        ConsoleColor.Green);
                             }
                             catch (Exception e)
                             {
-                                PrintRedMessage("\n" + e.Message);
+                                MessagePrinter.PrintConsoleColorMessage("\n" + e.Message,
+                                                                        ConsoleColor.Red);
                             }
 
                             break;
                         }
 
-                        PrintRedMessage(Resources.Error_IncorrectData + "\n");
+                        MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n",
+                                                                ConsoleColor.Red);
                     }
                 }
 
                 //7. Удалить компанию
                 void Command7()
                 {
-                    PrintGrayMessage("Удалить компанию\n");
+                    MessagePrinter.PrintConsoleColorMessage("Удалить компанию\n",
+                                                            ConsoleColor.Gray);
 
-                    PrintRedMessage("\nВНИМАНИЕ! \nПри удалении компании " +
-                                    "будут удалены все её водители и ТС!\n");
+                    MessagePrinter.PrintConsoleColorMessage("\nВНИМАНИЕ! \nПри удалении компании " +
+                                                            "будут удалены все её водители и ТС!\n",
+                                                            ConsoleColor.Red);
 
                     int companyId;
                     while (true)
                     {
-                        PrintGrayMessage("Введите id компании " +
-                                         "(для отмены - введите 0): ");
+                        MessagePrinter.PrintConsoleColorMessage("Введите id компании " +
+                                                                "(для отмены - введите 0): ",
+                                                                ConsoleColor.Gray);
                         string sId = Console.ReadLine();
 
                         if (int.TryParse(sId, out companyId)) break;
-                        PrintRedMessage(Resources.Error_IncorrectData + "\n");
+                        MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n",
+                                                                ConsoleColor.Red);
                     }
 
                     if (companyId == 0) return;
@@ -507,12 +556,15 @@ namespace TransportManager.UI
                                                                   .GetAwaiter()
                                                                   .GetResult();
 
-                        if (company == null) PrintRedMessage("\n" + Resources.Error_CompanyNotFound);
-                        else PrintGreenMessage($"\nКомпания {company.CompanyName} (id {companyId}) - удалена");
+                        if (company == null) MessagePrinter.PrintConsoleColorMessage("\n" + Resources.Error_CompanyNotFound,
+                                                                                     ConsoleColor.Red);
+                        else MessagePrinter.PrintConsoleColorMessage($"\nКомпания {company.CompanyName} (id {companyId}) - удалена",
+                                                                     ConsoleColor.Green);
                     }
                     catch (Exception e)
                     {
-                        PrintRedMessage("\n" + e.Message);
+                        MessagePrinter.PrintConsoleColorMessage("\n" + e.Message,
+                                                                ConsoleColor.Red);
                     }
                 }
             }
@@ -527,7 +579,8 @@ namespace TransportManager.UI
             {
                 DriversMenu();
 
-                PrintMagentaMessage(Resources.Message_EnterCommandNumber);
+                MessagePrinter.PrintConsoleColorMessage(Resources.Message_EnterCommandNumber,
+                                                        ConsoleColor.Magenta);
                 string command = Console.ReadLine();
 
                 switch (command)
@@ -557,13 +610,15 @@ namespace TransportManager.UI
                         isExit = false;
                         break;
                     default:
-                        PrintRedMessage(Resources.Error_IncorrectData + "\n");
+                        MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n",
+                                                                ConsoleColor.Red);
                         break;
                 }
 
                 void DriversMenu()
                 {
-                    PrintCyanMessage("\nКакую команду выполнить?");
+                    MessagePrinter.PrintConsoleColorMessage("\nКакую команду выполнить?",
+                                                            ConsoleColor.Cyan);
                     Console.WriteLine(@"1. Показать всех водителей");
                     Console.WriteLine(@"2. Показать данные водителя");
                     Console.WriteLine(@"3. Показать все ТС водителя");
@@ -572,14 +627,16 @@ namespace TransportManager.UI
                     Console.WriteLine(@"6. Удалить водителя");
                     Console.WriteLine("\n" + Resources.Message_ReturnToMainMenu + "\n");
 
-                    PrintGreenMessage("ДЛЯ ТЕСТИРОВАНИЯ");
+                    MessagePrinter.PrintConsoleColorMessage("ДЛЯ ТЕСТИРОВАНИЯ",
+                                                            ConsoleColor.Green);
                     Console.WriteLine("7. Сгенерировать водителей\n");
                 }
 
                 //1. Показать всех водителей
                 void Command1()
                 {
-                    PrintGrayMessage("Показать всех водителей\n");
+                    MessagePrinter.PrintConsoleColorMessage("Показать всех водителей\n",
+                                                            ConsoleColor.Gray);
 
                     try
                     {
@@ -596,7 +653,8 @@ namespace TransportManager.UI
 
                         if (drivers.Count > 0)
                         {
-                            PrintYellowMessage("\nСписок всех водителей");
+                            MessagePrinter.PrintConsoleColorMessage("\nСписок всех водителей",
+                                                                    ConsoleColor.Yellow);
                             drivers.ForEach(driver =>
                             {
                                 string info = $"id: {driver.Id}, " +
@@ -604,25 +662,30 @@ namespace TransportManager.UI
                                               $"id компании: {driver.CompanyId}";
 
                                 if (!driver.IsDeleted) Console.WriteLine(info);
-                                else PrintRedMessage(info + " (удалено!)");
+                                else MessagePrinter.PrintConsoleColorMessage(info + " (удалено!)",
+                                                                             ConsoleColor.Red);
                             });
                         }
-                        else PrintYellowMessage("\nВ данный момент список водителей пуст");
+                        else MessagePrinter.PrintConsoleColorMessage("\nВ данный момент список водителей пуст",
+                                                                     ConsoleColor.Yellow);
                     }
                     catch (Exception e)
                     {
-                        PrintRedMessage("\n" + e.Message);
+                        MessagePrinter.PrintConsoleColorMessage("\n" + e.Message,
+                                                                ConsoleColor.Red);
                     }
                 }
 
                 //2. Показать данные водителя
                 void Command2()
                 {
-                    PrintGrayMessage("Показать данные водителя\n");
+                    MessagePrinter.PrintConsoleColorMessage("Показать данные водителя\n",
+                                                            ConsoleColor.Gray);
 
                     while (true)
                     {
-                        PrintGrayMessage("Введите id водителя (цифры): ");
+                        MessagePrinter.PrintConsoleColorMessage("Введите id водителя (цифры): ",
+                                                                ConsoleColor.Gray);
                         string sId = Console.ReadLine();
 
                         if (int.TryParse(sId, out int id))
@@ -642,13 +705,15 @@ namespace TransportManager.UI
 
                                 if (driver == null || driver.IsDeleted)
                                 {
-                                    PrintRedMessage($"\nВодитель id {id} - не найден");
+                                    MessagePrinter.PrintConsoleColorMessage($"\nВодитель id {id} - не найден",
+                                                                            ConsoleColor.Red);
                                     break;
                                 }
 
                                 var notRemoteVehicles = driver.Vehicles.Where(v => !v.IsDeleted).ToList();
 
-                                PrintYellowMessage($"\nДанные водителя id {driver.Id}");
+                                MessagePrinter.PrintConsoleColorMessage($"\nДанные водителя id {driver.Id}",
+                                                                        ConsoleColor.Yellow);
                                 Console.WriteLine($"Имя: {driver.Name}");
                                 Console.WriteLine($"Id компании: {driver.CompanyId}");
                                 Console.WriteLine($"Кол-во ТС: {notRemoteVehicles.Count}");
@@ -658,28 +723,33 @@ namespace TransportManager.UI
                             }
                             catch (Exception e)
                             {
-                                PrintRedMessage("\n" + e.Message);
+                                MessagePrinter.PrintConsoleColorMessage("\n" + e.Message,
+                                                                        ConsoleColor.Red);
                                 break;
                             }
                         }
 
-                        PrintRedMessage(Resources.Error_IncorrectData + "\n");
+                        MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n",
+                                                                ConsoleColor.Red);
                     }
                 }
 
                 //3. Показать все ТС водителя
                 void Command3()
                 {
-                    PrintGrayMessage("Показать все ТС водителя\n");
+                    MessagePrinter.PrintConsoleColorMessage("Показать все ТС водителя\n",
+                                                            ConsoleColor.Gray);
 
                     int id;
                     while (true)
                     {
-                        PrintGrayMessage("Введите id водителя (цифры): ");
+                        MessagePrinter.PrintConsoleColorMessage("Введите id водителя (цифры): ",
+                                                                ConsoleColor.Gray);
                         string sId = Console.ReadLine();
 
                         if (int.TryParse(sId, out id)) break;
-                        PrintRedMessage(Resources.Error_IncorrectData + "\n");
+                        MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n",
+                                                                ConsoleColor.Red);
                     }
 
                     try
@@ -697,7 +767,8 @@ namespace TransportManager.UI
 
                         if (driver == null || driver.IsDeleted)
                         {
-                            PrintRedMessage($"\nВодитель id {id} - не найден");
+                            MessagePrinter.PrintConsoleColorMessage($"\nВодитель id {id} - не найден",
+                                                                    ConsoleColor.Red);
                             return;
                         }
 
@@ -705,7 +776,8 @@ namespace TransportManager.UI
 
                         if (notRemoteVehicles.Count > 0)
                         {
-                            PrintYellowMessage($"\nСписок ТС водителя id {id}");
+                            MessagePrinter.PrintConsoleColorMessage($"\nСписок ТС водителя id {id}",
+                                                                    ConsoleColor.Yellow);
                             foreach (var vehicle in notRemoteVehicles)
                             {
                                 Console.WriteLine($"id ТС: {vehicle.Id}, " +
@@ -714,37 +786,44 @@ namespace TransportManager.UI
                                                   $"дата создания (в базе): {vehicle.CreatedDate}");
                             }
                         }
-                        else PrintYellowMessage($"\nВ данный момент у водителя id {id} ещё нет ТС");
+                        else MessagePrinter.PrintConsoleColorMessage($"\nВ данный момент у водителя id {id} ещё нет ТС",
+                                                                     ConsoleColor.Yellow);
                     }
                     catch (Exception e)
                     {
-                        PrintRedMessage("\n" + e.Message);
+                        MessagePrinter.PrintConsoleColorMessage("\n" + e.Message,
+                                                                ConsoleColor.Red);
                     }
                 }
 
                 //4. Добавить водителя
                 void Command4()
                 {
-                    PrintGrayMessage("Добавить водителя\n");
+                    MessagePrinter.PrintConsoleColorMessage("Добавить водителя\n",
+                                                            ConsoleColor.Gray);
 
                     string name;
                     while (true)
                     {
-                        PrintGrayMessage("Введите имя водителя: ");
+                        MessagePrinter.PrintConsoleColorMessage("Введите имя водителя: ",
+                                                                ConsoleColor.Gray);
                         name = Console.ReadLine();
 
                         if (!string.IsNullOrWhiteSpace(name)) break;
-                        PrintRedMessage(Resources.Error_IncorrectData + "\n");
+                        MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n",
+                                                                ConsoleColor.Red);
                     }
 
                     int companyId;
                     while (true)
                     {
-                        PrintGrayMessage("Введите id компании водителя (цифры): ");
+                        MessagePrinter.PrintConsoleColorMessage("Введите id компании водителя (цифры): ",
+                                                                ConsoleColor.Gray);
                         string sIdV = Console.ReadLine();
 
                         if (int.TryParse(sIdV, out companyId)) break;
-                        PrintRedMessage(Resources.Error_IncorrectData + "\n");
+                        MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n",
+                                                                ConsoleColor.Red);
                     }
 
                     try
@@ -762,7 +841,8 @@ namespace TransportManager.UI
 
                         if (company == null || company.IsDeleted)
                         {
-                            PrintRedMessage("\n" + Resources.Error_CompanyNotFound);
+                            MessagePrinter.PrintConsoleColorMessage("\n" + Resources.Error_CompanyNotFound,
+                                                                    ConsoleColor.Red);
                             return;
                         }
 
@@ -782,23 +862,27 @@ namespace TransportManager.UI
                                                        .GetAwaiter()
                                                        .GetResult();
 
-                        PrintGreenMessage($"\nВодитель {driver.Name} - добавлен. " +
-                                          $"Id в базе: {driver.Id}");
+                        MessagePrinter.PrintConsoleColorMessage($"\nВодитель {driver.Name} - добавлен. " +
+                                                                $"Id в базе: {driver.Id}",
+                                                                ConsoleColor.Green);
                     }
                     catch (Exception e)
                     {
-                        PrintRedMessage("\n" + e.Message);
+                        MessagePrinter.PrintConsoleColorMessage("\n" + e.Message,
+                                                                ConsoleColor.Red);
                     }
                 }
 
                 //5. Обновить данные водителя
                 void Command5()
                 {
-                    PrintGrayMessage("Обновить данные водителя\n");
+                    MessagePrinter.PrintConsoleColorMessage("Обновить данные водителя\n",
+                                                            ConsoleColor.Gray);
 
                     while (true)
                     {
-                        PrintGrayMessage("Введите id водителя (цифры): ");
+                        MessagePrinter.PrintConsoleColorMessage("Введите id водителя (цифры): ",
+                                                                ConsoleColor.Gray);
                         string sId = Console.ReadLine();
                         
                         if (int.TryParse(sId, out var id))
@@ -818,31 +902,37 @@ namespace TransportManager.UI
 
                                 if (driver == null || driver.IsDeleted)
                                 {
-                                    PrintRedMessage($"\nВодитель id {id} - не найден");
+                                    MessagePrinter.PrintConsoleColorMessage($"\nВодитель id {id} - не найден",
+                                                                            ConsoleColor.Red);
                                     break;
                                 }
 
-                                PrintYellowMessage($"\nВыбран водитель {driver.Name} (id {id}) " +
-                                                   $"из компании id {driver.CompanyId}");
+                                MessagePrinter.PrintConsoleColorMessage($"\nВыбран водитель {driver.Name} (id {id}) " +
+                                                                        $"из компании id {driver.CompanyId}",
+                                                                        ConsoleColor.Yellow);
 
                                 string name;
                                 while (true)
                                 {
-                                    PrintGrayMessage("Введите новое имя водителя: ");
+                                    MessagePrinter.PrintConsoleColorMessage("Введите новое имя водителя: ",
+                                                                            ConsoleColor.Gray);
                                     name = Console.ReadLine();
 
                                     if (!string.IsNullOrWhiteSpace(name)) break;
-                                    PrintRedMessage(Resources.Error_IncorrectData + "\n");
+                                    MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n",
+                                                                            ConsoleColor.Red);
                                 }
 
                                 int companyId;
                                 while (true)
                                 {
-                                    PrintGrayMessage("Введите новый id компании водителя (цифры): ");
+                                    MessagePrinter.PrintConsoleColorMessage("Введите новый id компании водителя (цифры): ",
+                                                                            ConsoleColor.Gray);
                                     string sIdV = Console.ReadLine();
 
                                     if (int.TryParse(sIdV, out companyId)) break;
-                                    PrintRedMessage(Resources.Error_IncorrectData + "\n");
+                                    MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n",
+                                                                            ConsoleColor.Red);
                                 }
 
                                 var companiesService = new CompaniesService(new CompaniesRepository());
@@ -858,7 +948,8 @@ namespace TransportManager.UI
 
                                 if (company == null || company.IsDeleted)
                                 {
-                                    PrintRedMessage("\n" + Resources.Error_CompanyNotFound);
+                                    MessagePrinter.PrintConsoleColorMessage("\n" + Resources.Error_CompanyNotFound,
+                                                                            ConsoleColor.Red);
                                     return;
                                 }
 
@@ -873,33 +964,39 @@ namespace TransportManager.UI
                                                                      .GetAwaiter()
                                                                      .GetResult();
 
-                                PrintGreenMessage($"\nДанные водителя id {updatedDriver.Id} - обновлены");
+                                MessagePrinter.PrintConsoleColorMessage($"\nДанные водителя id {updatedDriver.Id} - обновлены",
+                                                                        ConsoleColor.Green);
                             }
                             catch (Exception e)
                             {
-                                PrintRedMessage("\n" + e.Message);
+                                MessagePrinter.PrintConsoleColorMessage("\n" + e.Message,
+                                                                        ConsoleColor.Red);
                             }
 
                             break;
                         }
 
-                        PrintRedMessage(Resources.Error_IncorrectData + "\n");
+                        MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n",
+                                                                ConsoleColor.Red);
                     }
                 }
 
                 //6. Удалить водителя
                 void Command6()
                 {
-                    PrintGrayMessage("Удалить водителя\n");
+                    MessagePrinter.PrintConsoleColorMessage("Удалить водителя\n",
+                                                            ConsoleColor.Gray);
 
                     int id;
                     while (true)
                     {
-                        PrintGrayMessage("Введите id водителя (цифры): ");
+                        MessagePrinter.PrintConsoleColorMessage("Введите id водителя (цифры): ",
+                                                                ConsoleColor.Gray);
                         string sId = Console.ReadLine();
 
                         if (int.TryParse(sId, out id)) break;
-                        PrintRedMessage(Resources.Error_IncorrectData + "\n");
+                        MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n",
+                                                                ConsoleColor.Red);
                     }
 
                     try
@@ -914,27 +1011,33 @@ namespace TransportManager.UI
                                                               .GetAwaiter()
                                                               .GetResult();
 
-                        if (driver == null) PrintRedMessage($"\nВодитель id {id} - не найден");
-                        else PrintGreenMessage($"\nВодитель id {id} - удален");
+                        if (driver == null) MessagePrinter.PrintConsoleColorMessage($"\nВодитель id {id} - не найден",
+                                                                                    ConsoleColor.Red);
+                        else MessagePrinter.PrintConsoleColorMessage($"\nВодитель id {id} - удален",
+                                                                     ConsoleColor.Green);
                     }
                     catch (Exception e)
                     {
-                        PrintRedMessage("\n" + e.Message);
+                        MessagePrinter.PrintConsoleColorMessage("\n" + e.Message,
+                                                                ConsoleColor.Red);
                     }
                 }
 
                 //7. Сгенерировать водителей
                 void Command7()
                 {
-                    PrintGrayMessage("Сгенерировать водителей\n");
+                    MessagePrinter.PrintConsoleColorMessage("Сгенерировать водителей\n",
+                                                            ConsoleColor.Gray);
 
                     int count;
                     while (true)
                     {
-                        PrintGrayMessage("Введите количество водителей: ");
+                        MessagePrinter.PrintConsoleColorMessage("Введите количество водителей: ",
+                                                                ConsoleColor.Gray);
                         string sId = Console.ReadLine();
                         if (int.TryParse(sId, out count)) break;
-                        PrintRedMessage(Resources.Error_IncorrectData + "\n");
+                        MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n",
+                                                                ConsoleColor.Red);
                     }
 
                     try
@@ -968,7 +1071,8 @@ namespace TransportManager.UI
                     }
                     catch (Exception e)
                     {
-                        PrintRedMessage("\n" + e.Message);
+                        MessagePrinter.PrintConsoleColorMessage("\n" + e.Message,
+                                                                ConsoleColor.Red);
                     }
                 }
             }
@@ -983,7 +1087,8 @@ namespace TransportManager.UI
             {
                 VehiclesMenu();
 
-                PrintMagentaMessage(Resources.Message_EnterCommandNumber);
+                MessagePrinter.PrintConsoleColorMessage(Resources.Message_EnterCommandNumber,
+                                                        ConsoleColor.Magenta);
                 string command = Console.ReadLine();
 
                 switch (command)
@@ -1010,13 +1115,15 @@ namespace TransportManager.UI
                         isExit = false;
                         break;
                     default:
-                        PrintRedMessage(Resources.Error_IncorrectData + "\n");
+                        MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n",
+                                                                ConsoleColor.Red);
                         break;
                 }
 
                 void VehiclesMenu()
                 {
-                    PrintCyanMessage("\nКакую команду выполнить?");
+                    MessagePrinter.PrintConsoleColorMessage("\nКакую команду выполнить?",
+                                                            ConsoleColor.Cyan);
                     Console.WriteLine(@"1. Показать все ТС");
                     Console.WriteLine(@"2. Показать данные ТС");
                     Console.WriteLine(@"3. Добавить ТС");
@@ -1024,14 +1131,16 @@ namespace TransportManager.UI
                     Console.WriteLine(@"5. Удалить ТС");
                     Console.WriteLine("\n" + Resources.Message_ReturnToMainMenu + "\n");
 
-                    PrintGreenMessage("ДЛЯ ТЕСТИРОВАНИЯ");
+                    MessagePrinter.PrintConsoleColorMessage("ДЛЯ ТЕСТИРОВАНИЯ",
+                                                            ConsoleColor.Green);
                     Console.WriteLine("6. Сгенерировать ТС\n");
                 }
 
                 //1. Показать все ТС
                 void Command1()
                 {
-                    PrintGrayMessage("Показать все ТС\n");
+                    MessagePrinter.PrintConsoleColorMessage("Показать все ТС\n",
+                                                            ConsoleColor.Gray);
 
                     var vehiclesService = new VehiclesService(new VehiclesRepository());
                     var vehiclesServiceLogger = new VehiclesServiceLoggerDecorator(_user,
@@ -1048,37 +1157,42 @@ namespace TransportManager.UI
 
                         if (vehicles.Count > 0)
                         {
-                            PrintYellowMessage("\nСписок всех ТС");
+                            MessagePrinter.PrintConsoleColorMessage("\nСписок всех ТС",
+                                                                    ConsoleColor.Yellow);
                             vehicles.ForEach(vehicle =>
                             {
                                 string info = $"id ТС: {vehicle.Id}, " +
                                               $"id компании: {vehicle.CompanyId}, " +
-                                              (vehicle.DriverId > 0
-                                                  ? $"Id водителя: {vehicle.DriverId}, "
-                                                  : "Id водителя: -, ") +
+                                              (vehicle.DriverId > 0 ? $"Id водителя: {vehicle.DriverId}, "
+                                                                    : "Id водителя: -, ") +
                                               $"модель: {vehicle.Model}, " +
                                               $"гос.номер: {vehicle.GovernmentNumber}";
 
                                 if (!vehicle.IsDeleted) Console.WriteLine(info);
-                                else PrintRedMessage(info + " (удалено!)");
+                                else MessagePrinter.PrintConsoleColorMessage(info + " (удалено!)",
+                                                                             ConsoleColor.Red);
                             });
                         }
-                        else PrintYellowMessage("В данный момент список ТС пуст");
+                        else MessagePrinter.PrintConsoleColorMessage("В данный момент список ТС пуст",
+                                                                     ConsoleColor.Yellow);
                     }
                     catch (Exception e)
                     {
-                        PrintRedMessage("\n" + e.Message);
+                        MessagePrinter.PrintConsoleColorMessage("\n" + e.Message,
+                                                                ConsoleColor.Red);
                     }
                 }
 
                 //2. Показать данные ТС
                 void Command2()
                 {
-                    PrintGrayMessage("Показать данные ТС\n");
+                    MessagePrinter.PrintConsoleColorMessage("Показать данные ТС\n",
+                                                            ConsoleColor.Gray);
 
                     while (true)
                     {
-                        PrintGrayMessage("Введите id ТС: ");
+                        MessagePrinter.PrintConsoleColorMessage("Введите id ТС: ",
+                                                                ConsoleColor.Gray);
                         string sId = Console.ReadLine();
 
                         if (int.TryParse(sId, out int id))
@@ -1098,15 +1212,16 @@ namespace TransportManager.UI
 
                                 if (vehicle == null || vehicle.IsDeleted)
                                 {
-                                    PrintRedMessage($"\nТС id {id} - не найдено");
+                                    MessagePrinter.PrintConsoleColorMessage($"\nТС id {id} - не найдено",
+                                                                            ConsoleColor.Red);
                                     break;
                                 }
 
-                                PrintYellowMessage($"\nДанные ТС id {vehicle.Id}");
+                                MessagePrinter.PrintConsoleColorMessage($"\nДанные ТС id {vehicle.Id}",
+                                                                        ConsoleColor.Yellow);
                                 Console.WriteLine($"Id компании: {vehicle.CompanyId}");
-                                Console.WriteLine(vehicle.DriverId > 0 
-                                                        ? $"Id водителя: {vehicle.DriverId}"
-                                                        : "Id водителя: -");
+                                Console.WriteLine(vehicle.DriverId > 0 ? $"Id водителя: {vehicle.DriverId}"
+                                                                       : "Id водителя: -");
                                 Console.WriteLine($"Модель: {vehicle.Model}");
                                 Console.WriteLine($"Гос.номер: {vehicle.GovernmentNumber}");
                                 Console.WriteLine($"Дата создания (в базе): {vehicle.CreatedDate}");
@@ -1115,7 +1230,8 @@ namespace TransportManager.UI
                             }
                             catch (Exception e)
                             {
-                                PrintRedMessage("\n" + e.Message);
+                                MessagePrinter.PrintConsoleColorMessage("\n" + e.Message,
+                                                                        ConsoleColor.Red);
                                 break;
                             }
                         }
@@ -1125,37 +1241,44 @@ namespace TransportManager.UI
                 //3. Добавить ТС
                 void Command3()
                 {
-                    PrintGrayMessage("Добавить ТС\n");
+                    MessagePrinter.PrintConsoleColorMessage("Добавить ТС\n",
+                                                            ConsoleColor.Gray);
 
                     string model;
                     while (true)
                     {
-                        PrintGrayMessage("Введите модель ТС: ");
+                        MessagePrinter.PrintConsoleColorMessage("Введите модель ТС: ",
+                                                                ConsoleColor.Gray);
                         model = Console.ReadLine();
 
                         if (!string.IsNullOrWhiteSpace(model)) break;
-                        PrintRedMessage(Resources.Error_IncorrectData + "\n");
+                        MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n",
+                                                                ConsoleColor.Red);
                     }
 
-                    string gn;
+                    string governmentNumber;
                     while (true)
                     {
-                        PrintGrayMessage("Введите гос.номер ТС (А000АА00): ");
-                        gn = Console.ReadLine();
+                        MessagePrinter.PrintConsoleColorMessage("Введите гос.номер ТС (А000АА00): ",
+                                                                ConsoleColor.Gray);
+                        governmentNumber = Console.ReadLine();
 
                         if (!string.IsNullOrWhiteSpace(model)) break;
-                        PrintRedMessage(Resources.Error_IncorrectData + "\n");
+                        MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n",
+                                                                ConsoleColor.Red);
                     }
 
                     int driverId;
                     while (true)
                     {
-                        PrintGrayMessage("Введите id водителя ТС (цифры), " +
-                                         "если водителя нет - введите 0: ");
+                        MessagePrinter.PrintConsoleColorMessage("Введите id водителя ТС (цифры), " +
+                                                                "если водителя нет - введите 0: ",
+                                                                ConsoleColor.Gray);
                         string sId = Console.ReadLine();
 
                         if (int.TryParse(sId, out driverId)) break;
-                        PrintRedMessage(Resources.Error_IncorrectData + "\n");
+                        MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n",
+                                                                ConsoleColor.Red);
                     }
 
                     try
@@ -1177,7 +1300,8 @@ namespace TransportManager.UI
 
                             if (driver == null || driver.IsDeleted)
                             {
-                                PrintRedMessage($"Водитель id {driverId} не найден!");
+                                MessagePrinter.PrintConsoleColorMessage($"Водитель id {driverId} не найден!",
+                                                                        ConsoleColor.Red);
                                 return;
                             }
                         }
@@ -1187,11 +1311,13 @@ namespace TransportManager.UI
                         {
                             while (true)
                             {
-                                PrintGrayMessage("Введите id компании ТС (цифры): ");
+                                MessagePrinter.PrintConsoleColorMessage("Введите id компании ТС (цифры): ",
+                                                                        ConsoleColor.Gray);
                                 string sIdV = Console.ReadLine();
 
                                 if (int.TryParse(sIdV, out companyId)) break;
-                                PrintRedMessage(Resources.Error_IncorrectData + "\n");
+                                MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n",
+                                                                        ConsoleColor.Red);
                             }
 
                             var companiesService = new CompaniesService(new CompaniesRepository());
@@ -1207,7 +1333,8 @@ namespace TransportManager.UI
 
                             if (company == null || company.IsDeleted)
                             {
-                                PrintRedMessage("\n" + Resources.Error_CompanyNotFound);
+                                MessagePrinter.PrintConsoleColorMessage("\n" + Resources.Error_CompanyNotFound,
+                                                                        ConsoleColor.Red);
                                 return;
                             }
                         }
@@ -1226,30 +1353,34 @@ namespace TransportManager.UI
                         var vehicle = vehiclesController.AddOrUpdateVehicleAsync(new VehicleModel
                                                                                  {
                                                                                      Model = model, 
-                                                                                     GovernmentNumber = gn, 
+                                                                                     GovernmentNumber = governmentNumber, 
                                                                                      DriverId = driverId == 0 ? (int?) null : driverId, 
                                                                                      CompanyId = companyId
                                                                                  })
                                                         .GetAwaiter()
                                                         .GetResult();
 
-                        PrintGreenMessage($"\nТС гос.номер {vehicle.GovernmentNumber} - добавлено. " +
-                                          $"Id в базе: {vehicle.Id}");
+                        MessagePrinter.PrintConsoleColorMessage($"\nТС гос.номер {vehicle.GovernmentNumber} - добавлено. " +
+                                                                $"Id в базе: {vehicle.Id}",
+                                                                ConsoleColor.Green);
                     }
                     catch (Exception e)
                     {
-                        PrintRedMessage("\n" + e.Message);
+                        MessagePrinter.PrintConsoleColorMessage("\n" + e.Message,
+                                                                ConsoleColor.Red);
                     }
                 }
 
                 //4. Обновить данные ТС
                 void Command4()
                 {
-                    PrintGrayMessage("Обновить данные ТС\n");
+                    MessagePrinter.PrintConsoleColorMessage("Обновить данные ТС\n",
+                                                            ConsoleColor.Gray);
 
                     while (true)
                     {
-                        PrintGrayMessage("Введите id ТС: ");
+                        MessagePrinter.PrintConsoleColorMessage("Введите id ТС: ",
+                                                                ConsoleColor.Gray);
                         string sId = Console.ReadLine();
 
                         if (int.TryParse(sId, out int id))
@@ -1268,39 +1399,46 @@ namespace TransportManager.UI
                                                                          .GetResult();
                                 if (vehicle == null || vehicle.IsDeleted)
                                 {
-                                    PrintRedMessage($"\nТС id {id} - не найдено");
+                                    MessagePrinter.PrintConsoleColorMessage($"\nТС id {id} - не найдено",
+                                                                            ConsoleColor.Red);
                                     break;
                                 }
 
                                 string model;
                                 while (true)
                                 {
-                                    PrintGrayMessage("Введите новую модель ТС: ");
+                                    MessagePrinter.PrintConsoleColorMessage("Введите новую модель ТС: ",
+                                                                            ConsoleColor.Gray);
                                     model = Console.ReadLine();
 
                                     if (!string.IsNullOrWhiteSpace(model)) break;
-                                    PrintRedMessage(Resources.Error_IncorrectData + "\n");
+                                    MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n",
+                                                                            ConsoleColor.Red);
                                 }
 
-                                string gn;
+                                string governmentNumber;
                                 while (true)
                                 {
-                                    PrintGrayMessage("Введите новый гос.номер ТС (А000АА00): ");
-                                    gn = Console.ReadLine();
+                                    MessagePrinter.PrintConsoleColorMessage("Введите новый гос.номер ТС (А000АА00): ",
+                                                                            ConsoleColor.Gray);
+                                    governmentNumber = Console.ReadLine();
 
                                     if (!string.IsNullOrWhiteSpace(model)) break;
-                                    PrintRedMessage(Resources.Error_IncorrectData + "\n");
+                                    MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n",
+                                                                            ConsoleColor.Red);
                                 }
 
                                 int driverId;
                                 while (true)
                                 {
-                                    PrintGrayMessage("Введите новый id водителя ТС (цифры), " +
-                                                     "если водителя нет - введите 0: ");
+                                    MessagePrinter.PrintConsoleColorMessage("Введите новый id водителя ТС (цифры), " +
+                                                                            "если водителя нет - введите 0: ",
+                                                                            ConsoleColor.Gray);
                                     string sDriverId = Console.ReadLine();
 
                                     if (int.TryParse(sDriverId, out driverId)) break;
-                                    PrintRedMessage(Resources.Error_IncorrectData + "\n");
+                                    MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n",
+                                                                            ConsoleColor.Red);
                                 }
 
                                 var driversService = new DriversService(new DriversRepository());
@@ -1320,7 +1458,8 @@ namespace TransportManager.UI
 
                                     if (driver == null || driver.IsDeleted)
                                     {
-                                        PrintRedMessage($"Водитель id {driverId} не найден!");
+                                        MessagePrinter.PrintConsoleColorMessage($"Водитель id {driverId} не найден!",
+                                                                                ConsoleColor.Red);
                                         return;
                                     }
                                 }
@@ -1330,11 +1469,13 @@ namespace TransportManager.UI
                                 {
                                     while (true)
                                     {
-                                        PrintGrayMessage("Введите новый id компании ТС (цифры): ");
+                                        MessagePrinter.PrintConsoleColorMessage("Введите новый id компании ТС (цифры): ",
+                                                                                ConsoleColor.Gray);
                                         string sCompanyId = Console.ReadLine();
 
                                         if (int.TryParse(sCompanyId, out companyId)) break;
-                                        PrintRedMessage(Resources.Error_IncorrectData + "\n");
+                                        MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n",
+                                                                                ConsoleColor.Red);
                                     }
 
                                     var companiesService = new CompaniesService(new CompaniesRepository());
@@ -1350,7 +1491,8 @@ namespace TransportManager.UI
 
                                     if (company == null || company.IsDeleted)
                                     {
-                                        PrintRedMessage("\n" + Resources.Error_CompanyNotFound);
+                                        MessagePrinter.PrintConsoleColorMessage("\n" + Resources.Error_CompanyNotFound,
+                                                                                ConsoleColor.Red);
                                         return;
                                     }
                                 }
@@ -1372,39 +1514,45 @@ namespace TransportManager.UI
                                                                                    Id = id, 
                                                                                    CreatedDate = vehicle.CreatedDate, 
                                                                                    Model = model, 
-                                                                                   GovernmentNumber = gn, 
+                                                                                   GovernmentNumber = governmentNumber, 
                                                                                    DriverId = driverId == 0 ? (int?) null : driverId, 
                                                                                    CompanyId = companyId
                                                                                })
                                                        .GetAwaiter()
                                                        .GetResult();
 
-                                PrintGreenMessage($"\nДанные ТС id {updatedVehicle.Id} - обновлены");
+                                MessagePrinter.PrintConsoleColorMessage($"\nДанные ТС id {updatedVehicle.Id} - обновлены",
+                                                                        ConsoleColor.Green);
                             }
                             catch (Exception e)
                             {
-                                PrintRedMessage("\n" + e.Message);
+                                MessagePrinter.PrintConsoleColorMessage("\n" + e.Message,
+                                                                        ConsoleColor.Red);
                             }
 
                             break;
                         }
 
-                        PrintRedMessage(Resources.Error_IncorrectData + "\n");
+                        MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n",
+                                                                ConsoleColor.Red);
                     }
                 }
 
                 //5. Удалить ТС
                 void Command5()
                 {
-                    PrintGrayMessage("Удалить ТС\n");
+                    MessagePrinter.PrintConsoleColorMessage("Удалить ТС\n",
+                                                            ConsoleColor.Gray);
 
                     int id;
                     while (true)
                     {
-                        PrintGrayMessage("Введите id ТС (цифры): ");
+                        MessagePrinter.PrintConsoleColorMessage("Введите id ТС (цифры): ",
+                                                                ConsoleColor.Gray);
                         string sId = Console.ReadLine();
                         if (int.TryParse(sId, out id)) break;
-                        PrintRedMessage(Resources.Error_IncorrectData + "\n");
+                        MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n",
+                                                                ConsoleColor.Red);
                     }
 
                     try
@@ -1420,27 +1568,33 @@ namespace TransportManager.UI
                                                         .GetAwaiter()
                                                         .GetResult();
 
-                        if (vehicle == null) PrintRedMessage($"\nТС id {id} - не найдено");
-                        else PrintGreenMessage($"\nТС id {id} - удалено");
+                        if (vehicle == null) MessagePrinter.PrintConsoleColorMessage($"\nТС id {id} - не найдено",
+                                                                                     ConsoleColor.Red);
+                        else MessagePrinter.PrintConsoleColorMessage($"\nТС id {id} - удалено",
+                                                                     ConsoleColor.Green);
                     }
                     catch (Exception e)
                     {
-                        PrintRedMessage("\n" + e.Message);
+                        MessagePrinter.PrintConsoleColorMessage("\n" + e.Message,
+                                                                ConsoleColor.Red);
                     }
                 }
 
                 //6. Сгенерировать ТС
                 void Command6()
                 {
-                    PrintGrayMessage("Сгенерировать ТС\n");
+                    MessagePrinter.PrintConsoleColorMessage("Сгенерировать ТС\n",
+                                                            ConsoleColor.Gray);
 
                     int count;
                     while (true)
                     {
-                        PrintGrayMessage("Введите количество ТС: ");
+                        MessagePrinter.PrintConsoleColorMessage("Введите количество ТС: ",
+                                                                ConsoleColor.Gray);
                         string sId = Console.ReadLine();
                         if (int.TryParse(sId, out count)) break;
-                        PrintRedMessage(Resources.Error_IncorrectData + "\n");
+                        MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n",
+                                                                ConsoleColor.Red);
                     }
 
                     try
@@ -1474,7 +1628,8 @@ namespace TransportManager.UI
                     }
                     catch (Exception e)
                     {
-                        PrintRedMessage("\n" + e.Message);
+                        MessagePrinter.PrintConsoleColorMessage("\n" + e.Message,
+                                                                ConsoleColor.Red);
                     }
                 }
             }
@@ -1489,7 +1644,8 @@ namespace TransportManager.UI
             {
                 ReportsMenu();
 
-                PrintMagentaMessage(Resources.Message_EnterCommandNumber);
+                MessagePrinter.PrintConsoleColorMessage(Resources.Message_EnterCommandNumber,
+                                                        ConsoleColor.Magenta);
                 string command = Console.ReadLine();
 
                 switch (command)
@@ -1516,13 +1672,15 @@ namespace TransportManager.UI
                         isExit = false;
                         break;
                     default:
-                        PrintRedMessage(Resources.Error_IncorrectData + "\n");
+                        MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n",
+                                                                ConsoleColor.Red);
                         break;
                 }
 
                 void ReportsMenu()
                 {
-                    PrintCyanMessage("\nКакой отчёт составить?");
+                    MessagePrinter.PrintConsoleColorMessage("\nКакой отчёт составить?",
+                                                            ConsoleColor.Cyan);
                     Console.WriteLine(@"1. Суммарный отчет по всем ТС за сегодня");
                     Console.WriteLine(@"2. Суммарный отчет по всем ТС за период");
                     Console.WriteLine(@"3. Среднесуточный отчет по всем ТС за период");
@@ -1535,7 +1693,8 @@ namespace TransportManager.UI
                 //1. Суммарный отчет по всем ТС за сегодня
                 void Command1()
                 {
-                    PrintGrayMessage("Суммарный отчет по всем ТС за сегодня\n");
+                    MessagePrinter.PrintConsoleColorMessage("Суммарный отчет по всем ТС за сегодня\n",
+                                                            ConsoleColor.Gray);
                     
                     DateTime date = DateTime.Today;
                     
@@ -1559,7 +1718,8 @@ namespace TransportManager.UI
                 //2. Суммарный отчет по всем ТС за период
                 void Command2()
                 {
-                    PrintGrayMessage("Суммарный отчет по всем ТС за период\n");
+                    MessagePrinter.PrintConsoleColorMessage("Суммарный отчет по всем ТС за период\n",
+                                                            ConsoleColor.Gray);
                     
                     ReadDate(out var fromDate, out var toDate);
                     
@@ -1583,7 +1743,8 @@ namespace TransportManager.UI
                 //3. Среднесуточный отчет по всем ТС за период
                 void Command3()
                 {
-                    PrintGrayMessage("Среднесуточный отчет по всем ТС за период\n");
+                    MessagePrinter.PrintConsoleColorMessage("Среднесуточный отчет по всем ТС за период\n",
+                                                            ConsoleColor.Gray);
 
                     ReadDate(out var fromDate, out var toDate);
                     
@@ -1607,7 +1768,8 @@ namespace TransportManager.UI
                 //4. Суммарный отчет по одному ТС за сегодня
                 void Command4()
                 {
-                    PrintGrayMessage("Суммарный отчет по одному ТС за сегодня\n");
+                    MessagePrinter.PrintConsoleColorMessage("Суммарный отчет по одному ТС за сегодня\n",
+                                                            ConsoleColor.Gray);
 
                     var vehicle = FindVehicle();
 
@@ -1638,7 +1800,8 @@ namespace TransportManager.UI
                 //5. Суммарный отчет по одному ТС за период
                 void Command5()
                 {
-                    PrintGrayMessage("Суммарный отчет по одному ТС за период\n");
+                    MessagePrinter.PrintConsoleColorMessage("Суммарный отчет по одному ТС за период\n",
+                                                            ConsoleColor.Gray);
 
                     var vehicle = FindVehicle();
 
@@ -1669,7 +1832,8 @@ namespace TransportManager.UI
                 //6. Среднесуточный отчет по одному ТС за период
                 void Command6()
                 {
-                    PrintGrayMessage("Среднесуточный отчет по одному ТС за период\n");
+                    MessagePrinter.PrintConsoleColorMessage("Среднесуточный отчет по одному ТС за период\n",
+                                                            ConsoleColor.Gray);
 
                     var vehicle = FindVehicle();
 
@@ -1702,7 +1866,8 @@ namespace TransportManager.UI
                 {
                     while (true)
                     {
-                        PrintGrayMessage("\nВведите id ТС: ");
+                        MessagePrinter.PrintConsoleColorMessage("\nВведите id ТС: ",
+                                                                ConsoleColor.Gray);
                         string sId = Console.ReadLine();
 
                         if (int.TryParse(sId, out int id))
@@ -1721,17 +1886,20 @@ namespace TransportManager.UI
                                                                          .GetResult();
 
                                 if (vehicle != null && !vehicle.IsDeleted) return vehicle;
-                                PrintRedMessage($"\nТС id {id} - не найдено");
+                                MessagePrinter.PrintConsoleColorMessage($"\nТС id {id} - не найдено",
+                                                                        ConsoleColor.Red);
                                 return null;
                             }
                             catch (Exception e)
                             {
-                                PrintRedMessage("\n" + e.Message);
+                                MessagePrinter.PrintConsoleColorMessage("\n" + e.Message,
+                                                                        ConsoleColor.Red);
                                 return null;
                             }
                         }
                         
-                        PrintRedMessage(Resources.Error_IncorrectData);
+                        MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData,
+                                                                ConsoleColor.Red);
                     }
                 }
 
@@ -1748,7 +1916,8 @@ namespace TransportManager.UI
                             DateTimeStyles.None, 
                             out fromDate)) break;
 
-                        PrintRedMessage(Resources.Error_IncorrectData);
+                        MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData,
+                                                                ConsoleColor.Red);
                     }
 
                     while (true)
@@ -1761,11 +1930,13 @@ namespace TransportManager.UI
                             DateTimeStyles.None, 
                             out toDate))
                         {
-                            if (fromDate > toDate) PrintRedMessage("Конечная дата раньше начальной!\n");
+                            if (fromDate > toDate) MessagePrinter.PrintConsoleColorMessage("Конечная дата раньше начальной!\n",
+                                                                                           ConsoleColor.Red);
                             break;
                         }
 
-                        PrintRedMessage(Resources.Error_IncorrectData + "\n");
+                        MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n",
+                                                                ConsoleColor.Red);
                     }
                 }
 
@@ -1779,7 +1950,8 @@ namespace TransportManager.UI
                     if (statistic == null)
                     {
                         Console.WriteLine();
-                        PrintRedMessage("\nСтатистика отсутсвует!");
+                        MessagePrinter.PrintConsoleColorMessage("\nСтатистика отсутсвует!",
+                                                                ConsoleColor.Red);
                         return;
                     }
                     
@@ -1800,56 +1972,16 @@ namespace TransportManager.UI
                 //Ожидание выполнения Задачи
                 void Wait(Task task)
                 {
-                    PrintGrayMessage("\nПожалуйста, подождите.");
+                    MessagePrinter.PrintConsoleColorMessage("\nПожалуйста, подождите.",
+                                                            ConsoleColor.Gray);
                     while (!task.IsCompleted)
                     {
-                        PrintGrayMessage(".");
+                        MessagePrinter.PrintConsoleColorMessage(".",
+                                                                ConsoleColor.Gray);
                         Thread.Sleep(400);
                     }
                 }
             }
-        }
-
-        void PrintYellowMessage(string message)
-        {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine(message);
-            Console.ResetColor();
-        }
-
-        void PrintGrayMessage(string message)
-        {
-            Console.ForegroundColor = ConsoleColor.Gray;
-            Console.Write(message);
-            Console.ResetColor();
-        }
-
-        void PrintRedMessage(string message)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(message);
-            Console.ResetColor();
-        }
-
-        void PrintGreenMessage(string message)
-        {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(message);
-            Console.ResetColor();
-        }
-
-        void PrintCyanMessage(string message)
-        {
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine(message);
-            Console.ResetColor();
-        }
-
-        void PrintMagentaMessage(string message)
-        {
-            Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.Write(message);
-            Console.ResetColor();
         }
     }
 }

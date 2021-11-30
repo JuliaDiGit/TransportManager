@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using TransportManager.DataEF;
+using TransportManager.UI.Helpers;
 
 namespace TransportManager.UI
 {
@@ -17,8 +18,8 @@ namespace TransportManager.UI
                 Console.WriteLine("Запущена инициализация базы данных телеметрии.");
                 
                 Console.Write("\nПожалуйста, подождите.");
-                Wait(taskMainDb);
-                Wait(taskStatisticsDb);
+                TaskWaiter.WaitAndPrintDot(taskMainDb);
+                TaskWaiter.WaitAndPrintDot(taskStatisticsDb);
 
                 if (taskMainDb.Exception != null)
                 {
@@ -29,7 +30,8 @@ namespace TransportManager.UI
                 }
                 
                 Console.WriteLine();
-                PrintColorMessage("\nОсновная база данных: Связь установлена.", ConsoleColor.Green);
+                MessagePrinter.PrintConsoleColorMessage("\nОсновная база данных: Связь установлена.", 
+                                                        ConsoleColor.Green);
 
                 if (taskStatisticsDb.Exception != null)
                 {
@@ -39,31 +41,17 @@ namespace TransportManager.UI
                         throw e;
                     }
                 }
-                
-                PrintColorMessage("База данных телеметрии: Связь установлена.", ConsoleColor.Green);
+
+                MessagePrinter.PrintConsoleColorMessage("База данных телеметрии: Связь установлена.", 
+                                                        ConsoleColor.Green);
             }
             catch (Exception e)
             {
-                PrintColorMessage($"Ошибка инициализации БД: {e.Message}", ConsoleColor.Red);
+                MessagePrinter.PrintConsoleColorMessage($"Ошибка инициализации БД: {e.Message}", 
+                                                        ConsoleColor.Red);
 
                 throw;
             }
-        }
-
-        private static void Wait(Task task)
-        {
-            while (!task.IsCompleted)
-            {
-                Console.Write(".");
-                Thread.Sleep(400);
-            }
-        }
-
-        private static void PrintColorMessage(object message, ConsoleColor color)
-        {
-            Console.ForegroundColor = color;
-            Console.WriteLine(message);
-            Console.ResetColor();
         }
     }
 }

@@ -1,4 +1,4 @@
-namespace TransportManager.Logger.Abstract
+namespace TransportManager.Loggers.Abstract
 {
     public interface ILogger
     {
