@@ -1,4 +1,5 @@
 using System;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using TransportManager.Loggers;
@@ -21,8 +22,11 @@ namespace TransportManager
                 var serverPath = Path.Combine(projectPath,
                                               @"TelemetryStorageServer\TelemetryStorageServer\bin\Debug\TelemetryStorageServer.exe");
 
-                // запускаем TelemetryStorageServer по сформированному пути
-                ProcessLauncher.Start(serverPath, "TelemetryStorageServer");
+                // получаем значение ReceivingMethod из app.config
+                var receivingMethod = ConfigurationManager.AppSettings.Get("ReceivingMethod");
+
+                // запускаем TelemetryStorageServer по сформированному пути с аргументом ReceivingMethod
+                ProcessLauncher.Start("TelemetryStorageServer", serverPath, receivingMethod);
             }
             catch (Exception)
             {

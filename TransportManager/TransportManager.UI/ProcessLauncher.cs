@@ -1,18 +1,26 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Threading;
 using System.Threading.Tasks;
 using TransportManager.UI.Helpers;
 
 namespace TransportManager.UI
 {
+    /// <summary>
+    ///     класс ProcessLauncher используется для запуска процесса
+    /// </summary>
     public static class ProcessLauncher
     {
-        public static void Start(string processPath, string processName)
+        /// <summary>
+        ///     метод Start инициирует запуск процесса
+        /// </summary>
+        /// <param name="processName">имя процесса</param>
+        /// <param name="processPath">путь до exe файла</param>
+        /// <param name="arguments">аргументы, передаваемые процессу</param>
+        public static void Start(string processName, string processPath, string arguments = null)
         {
             try
             {
-                Task launchTask = Launch(processPath);
+                Task launchTask = LaunchAsync(processPath, arguments);
                 Console.WriteLine($"\nИдёт запуск процесса {processName}.");
 
                 Console.Write("\nПожалуйста, подождите.");
@@ -40,9 +48,16 @@ namespace TransportManager.UI
             }
 
         }
-        private static async Task Launch(string processPath)
+
+        /// <summary>
+        ///     метод LaunchAsync ассинхронно запускает новый процесс
+        /// </summary>
+        /// <param name="processPath">путь до exe файла</param>
+        /// <param name="arguments">аргументы, передаваемые процессу</param>
+        /// <returns></returns>
+        private static async Task LaunchAsync(string processPath, string arguments = null)
         {
-            await Task.Run(() => Process.Start(processPath));
+            await Task.Run(() => Process.Start(processPath, arguments));
         }
     }
 }
