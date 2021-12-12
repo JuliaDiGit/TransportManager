@@ -2,21 +2,21 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageSenderEmulator", "MessageSenderEmulator\MessageSenderEmulator.csproj", "{CC22C004-B3C9-4DC6-B601-3C27643AF37F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{8517B991-2876-45D4-8A86-7AAE0E356C83}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageSenderEmulator.API", "MessageSenderEmulator.API\MessageSenderEmulator.API.csproj", "{8517B991-2876-45D4-8A86-7AAE0E356C83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{7D185F2C-E1D1-4036-9776-CFBA2BD5EE5B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageSenderEmulator.Services", "MessageSenderEmulator.Services\MessageSenderEmulator.Services.csproj", "{7D185F2C-E1D1-4036-9776-CFBA2BD5EE5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "UI\UI.csproj", "{22246999-9253-444E-924C-5D4E07573C87}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageSenderEmulator.UI", "MessageSenderEmulator.UI\MessageSenderEmulator.UI.csproj", "{22246999-9253-444E-924C-5D4E07573C87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{E6F65D6C-3C9F-417D-AF6B-2C9C2BA92D21}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageSenderEmulator.Models", "MessageSenderEmulator.Models\MessageSenderEmulator.Models.csproj", "{E6F65D6C-3C9F-417D-AF6B-2C9C2BA92D21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{90DFCA0E-6996-40A7-B9D8-7F5F5497E2A9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageSenderEmulator.Domain", "MessageSenderEmulator.Domain\MessageSenderEmulator.Domain.csproj", "{90DFCA0E-6996-40A7-B9D8-7F5F5497E2A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mappers", "Mappers\Mappers.csproj", "{F1BEAFD1-47EF-4847-BEE7-6D19967E27E7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageSenderEmulator.Mappers", "MessageSenderEmulator.Mappers\MessageSenderEmulator.Mappers.csproj", "{F1BEAFD1-47EF-4847-BEE7-6D19967E27E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageSenders", "MessageSenders\MessageSenders.csproj", "{B424B078-9573-4C0B-AD56-E625E060B957}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageSenderEmulator.MessageSenders", "MessageSenderEmulator.MessageSenders\MessageSenderEmulator.MessageSenders.csproj", "{B424B078-9573-4C0B-AD56-E625E060B957}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enums", "Enums\Enums.csproj", "{A6F129A4-A33B-426E-8F78-8D2B74299A32}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageSenderEmulator.Enums", "MessageSenderEmulator.Enums\MessageSenderEmulator.Enums.csproj", "{A6F129A4-A33B-426E-8F78-8D2B74299A32}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

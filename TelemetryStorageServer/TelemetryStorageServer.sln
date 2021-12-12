@@ -2,15 +2,15 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelemetryStorageServer", "TelemetryStorageServer\TelemetryStorageServer.csproj", "{EB24A1DB-84F7-4E1C-8DEA-842923CBD604}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{B3F9B08B-8549-4CFE-9519-792834B22BDD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelemetryStorageServer.Data", "TelemetryStorageServer.Data\TelemetryStorageServer.Data.csproj", "{B3F9B08B-8549-4CFE-9519-792834B22BDD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{3B828A0D-5997-4096-9AB1-8BAC061E43DD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelemetryStorageServer.Services", "TelemetryStorageServer.Services\TelemetryStorageServer.Services.csproj", "{3B828A0D-5997-4096-9AB1-8BAC061E43DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mappers", "Mappers\Mappers.csproj", "{BF3C07B7-C42F-4E56-9E4F-254D064CC96A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelemetryStorageServer.Mappers", "TelemetryStorageServer.Mappers\TelemetryStorageServer.Mappers.csproj", "{BF3C07B7-C42F-4E56-9E4F-254D064CC96A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{8B9859D4-8709-4FCC-858F-5318C1676632}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelemetryStorageServer.Entities", "TelemetryStorageServer.Entities\TelemetryStorageServer.Entities.csproj", "{8B9859D4-8709-4FCC-858F-5318C1676632}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{DE75BD86-DCDB-4CF3-8AEA-2F06A87DA39F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelemetryStorageServer.Domain", "TelemetryStorageServer.Domain\TelemetryStorageServer.Domain.csproj", "{DE75BD86-DCDB-4CF3-8AEA-2F06A87DA39F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
