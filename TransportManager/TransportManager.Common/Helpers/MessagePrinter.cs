@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TransportManager.UI.Helpers
+namespace TransportManager.Common.Helpers
 {
     public static class MessagePrinter
     {

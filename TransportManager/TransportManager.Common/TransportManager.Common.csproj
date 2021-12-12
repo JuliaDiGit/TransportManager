@@ -45,6 +45,8 @@
     <Compile Include="Enums\StatisticsType.cs" />
     <Compile Include="Exceptions\AccessException.cs" />
     <Compile Include="Exceptions\SourceNotAvailableException.cs" />
+    <Compile Include="Helpers\MessagePrinter.cs" />
+    <Compile Include="Helpers\TaskWaiter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
