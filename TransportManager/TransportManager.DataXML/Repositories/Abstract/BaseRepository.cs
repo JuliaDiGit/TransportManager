@@ -19,9 +19,8 @@ namespace TransportManager.DataXML.Repositories.Abstract
         {
             List<TEntity> listTDto = _serializer.Data;
             
-            List<IBaseEntity> listIDto = _serializer.Data
-                                                    .Select(obj => (IBaseEntity)obj)
-                                                    .ToList();
+            List<IBaseEntity> listIDto = _serializer.Data.Select(obj => (IBaseEntity)obj)
+                                                         .ToList();
 
             IBaseEntity entityI = entity as IBaseEntity;
 

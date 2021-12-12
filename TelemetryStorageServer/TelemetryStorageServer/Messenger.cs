@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Services;
+using TelemetryStorageServer.Services;
 
 namespace TelemetryStorageServer
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Data;
-using Services;
+using TelemetryStorageServer.Data;
+using TelemetryStorageServer.Services;
 
 namespace TelemetryStorageServer
 {

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using TransportManager.Common.Helpers;
 using TransportManager.DataEF;
-using TransportManager.UI.Helpers;
 
 namespace TransportManager.UI
 {

@@ -1,5 +1,6 @@
 using System;
 using TransportManager.API.Controllers;
+using TransportManager.Common.Helpers;
 using TransportManager.DataEF.Repositories;
 using TransportManager.Loggers.Abstract;
 using TransportManager.Models;
@@ -35,7 +36,7 @@ namespace TransportManager.UI
                             Registration();
                             break;
                         case 0:
-                            PrintColorMessage("\nРабота программы завершена.", ConsoleColor.Green);
+                            MessagePrinter.PrintConsoleColorMessage("\nРабота программы завершена.", ConsoleColor.Green);
                             break;
                     }
 
@@ -70,12 +71,12 @@ namespace TransportManager.UI
             {
                 UserModel user = usersController.GetUserByLoginAsync(login).GetAwaiter().GetResult();
                 if (user != null && user.Password == password) return user;
-                PrintColorMessage("\nНеверный логин или пароль", ConsoleColor.Red);
+                MessagePrinter.PrintConsoleColorMessage("\nНеверный логин или пароль", ConsoleColor.Red);
                 return null;
             }
             catch (Exception e)
             {
-                PrintColorMessage("\n" + e.Message, ConsoleColor.Red);
+                MessagePrinter.PrintConsoleColorMessage("\n" + e.Message, ConsoleColor.Red);
                 return null;
             }
         }
@@ -92,7 +93,7 @@ namespace TransportManager.UI
                 login = Console.ReadLine();
 
                 if (!string.IsNullOrWhiteSpace(login)) break;
-                PrintColorMessage(Resources.Error_IncorrectData + "\n", ConsoleColor.Red);
+                MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n", ConsoleColor.Red);
             }
 
             while (true)
@@ -114,15 +115,15 @@ namespace TransportManager.UI
                                 break;
                             }
 
-                            PrintColorMessage("Пароли не совпадают!", ConsoleColor.Red);
+                            MessagePrinter.PrintConsoleColorMessage("Пароли не совпадают!", ConsoleColor.Red);
                         }
-                        else PrintColorMessage(Resources.Error_IncorrectData + "\n", ConsoleColor.Red);
+                        else MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n", ConsoleColor.Red);
                     }
 
                     break;
                 }
 
-                PrintColorMessage(Resources.Error_IncorrectData + "\n", ConsoleColor.Red);
+                MessagePrinter.PrintConsoleColorMessage(Resources.Error_IncorrectData + "\n", ConsoleColor.Red);
             }
 
             try
@@ -141,22 +142,15 @@ namespace TransportManager.UI
                                            .GetAwaiter()
                                            .GetResult();
 
-                if (user == null) PrintColorMessage("Fail", ConsoleColor.Red);
-                else PrintColorMessage("Success", ConsoleColor.Green);
+                if (user == null) MessagePrinter.PrintConsoleColorMessage("Fail", ConsoleColor.Red);
+                else MessagePrinter.PrintConsoleColorMessage("Success", ConsoleColor.Green);
             }
             catch (Exception e)
             {
-                PrintColorMessage(e.Message, ConsoleColor.Red);
+                MessagePrinter.PrintConsoleColorMessage(e.Message, ConsoleColor.Red);
             }
 
             Start();
-        }
-
-        private static void PrintColorMessage(object message, ConsoleColor color)
-        {
-            Console.ForegroundColor = color;
-            Console.WriteLine(message);
-            Console.ResetColor();
         }
     }
 }

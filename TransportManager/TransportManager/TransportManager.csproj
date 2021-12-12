@@ -51,6 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdditionalModulesLauncher.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -60,6 +61,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TransportManager.Common\TransportManager.Common.csproj">
+      <Project>{e45cb6db-7192-4fe8-9011-d5349e60c6ee}</Project>
+      <Name>TransportManager.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TransportManager.DataEF\TransportManager.DataEF.csproj">
       <Project>{0ec8ccda-063e-49f3-a4a8-bf22989a9d01}</Project>
       <Name>TransportManager.DataEF</Name>
@@ -85,6 +90,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="README.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

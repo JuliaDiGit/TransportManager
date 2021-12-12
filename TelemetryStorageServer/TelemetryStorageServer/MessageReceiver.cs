@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Net;
-using Services;
+using TelemetryStorageServer.Services;
 
 namespace TelemetryStorageServer
 {
